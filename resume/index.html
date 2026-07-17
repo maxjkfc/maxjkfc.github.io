@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>江豈鋒 Max Chiang — AI-native Product Engineer</title>
+<meta name="description" content="12 年後端與基礎設施、兩次新創持股 CTO；2026 年起全面轉入 AI 協作開發，以 multi-agent 工作流每日交付正式環境功能。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="江豈鋒 Max Chiang — AI-native Product Engineer">
+<meta property="og:description" content="12 年後端與基礎設施、兩次新創持股 CTO；2026 年起全面轉入 AI 協作開發，以 multi-agent 工作流每日交付正式環境功能。">
+<meta property="og:url" content="https://maxjkfc.github.io/resume/">
+<meta property="og:locale" content="zh_TW">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎛️</text></svg>">
+</head>
+<body>
+<style>
+  :root {
+    --bg: #F3F5F7;
+    --surface: #FBFCFD;
+    --ink: #182129;
+    --muted: #56646F;
+    --line: #D8DEE4;
+    --accent: #A2571F;
+    --accent-strong: #8A4717;
+    --dot: rgba(162, 87, 31, 0.55);
+    --font-sans: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0F1317;
+      --surface: #151B21;
+      --ink: #E6EBEF;
+      --muted: #94A1AB;
+      --line: #29323B;
+      --accent: #D6905A;
+      --accent-strong: #E3A876;
+      --dot: rgba(214, 144, 90, 0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1317;
+    --surface: #151B21;
+    --ink: #E6EBEF;
+    --muted: #94A1AB;
+    --line: #29323B;
+    --accent: #D6905A;
+    --accent-strong: #E3A876;
+    --dot: rgba(214, 144, 90, 0.5);
+  }
+  :root[data-theme="light"] {
+    --bg: #F3F5F7;
+    --surface: #FBFCFD;
+    --ink: #182129;
+    --muted: #56646F;
+    --line: #D8DEE4;
+    --accent: #A2571F;
+    --accent-strong: #8A4717;
+    --dot: rgba(162, 87, 31, 0.55);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 4px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  .mono { font-family: var(--font-mono); }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+
+  /* ── 直排定位語（桌面版左緣） ───────────────── */
+  .rail {
+    position: fixed;
+    left: 26px;
+    top: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    font-size: 0.78rem;
+    letter-spacing: 0.5em;
+    color: var(--muted);
+    user-select: none;
+    z-index: 1;
+  }
+  @media (max-width: 1220px) { .rail { display: none; } }
+
+  /* ── 頂欄 ───────────────── */
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 22px 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+  .top .brand { color: var(--muted); letter-spacing: 0.08em; text-decoration: none; }
+  .top .brand:hover { color: var(--accent); }
+  .top nav { display: flex; gap: 20px; }
+
+  /* ── Hero ───────────────── */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 48px;
+    align-items: center;
+    padding: 72px 0 64px;
+  }
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; gap: 32px; padding: 48px 0 40px; }
+  }
+  .hero h1 {
+    margin: 0 0 6px;
+    font-size: clamp(2.5rem, 6vw, 3.9rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+  }
+  .hero h1 .latin {
+    display: block;
+    font-size: 0.42em;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+  }
+  .zh-creed {
+    margin: 26px 0 0;
+    font-size: 1.28rem;
+    font-weight: 600;
+    line-height: 1.75;
+    letter-spacing: 0.02em;
+    text-wrap: balance;
+  }
+  .motto {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+    margin: 10px 0 0;
+  }
+  .lede {
+    max-width: 34em;
+    margin: 18px 0 0;
+    color: var(--muted);
+  }
+  .hero-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+  .hero-links a {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    padding: 8px 16px;
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .hero-links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+  #field {
+    width: 100%;
+    height: 420px;
+    display: block;
+    color: var(--dot);
+  }
+  @media (max-width: 860px) { #field { height: 200px; } }
+  .field-cap {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 8px;
+  }
+
+  /* ── 區段共用 ───────────────── */
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  h2 {
+    margin: 0 0 32px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-wrap: balance;
+  }
+  h3 { margin: 0 0 8px; font-size: 1.02rem; font-weight: 600; }
+
+  .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ── 數字 ───────────────── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 36px 28px;
+  }
+  .metric .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .metric .num em { font-style: normal; color: var(--accent); }
+  .metric .label { margin-top: 6px; font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── AI-native ───────────────── */
+  .section-lede {
+    max-width: 42em;
+    margin: -18px 0 40px;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .cols3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 40px 36px;
+  }
+  .cols3 p { margin: 0; font-size: 0.92rem; color: var(--muted); }
+  .cols3 h3 { display: flex; align-items: baseline; gap: 10px; }
+  .cols3 h3 .tick { font-family: var(--font-mono); color: var(--accent); font-size: 0.85rem; }
+
+  /* ── 信條 ───────────────── */
+  .creed {
+    margin: 0;
+    padding: 64px 0;
+    border-top: 1px solid var(--line);
+    text-align: center;
+  }
+  .creed p {
+    margin: 0 auto;
+    max-width: 24em;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-weight: 600;
+    line-height: 1.6;
+    text-wrap: balance;
+  }
+  .creed p strong { color: var(--accent); font-weight: 600; }
+  .creed .src { margin-top: 16px; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.18em; color: var(--muted); }
+
+  /* ── 經歷 ───────────────── */
+  .arc {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin: -18px 0 36px;
+  }
+  .arc em { font-style: normal; color: var(--accent); }
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .timeline li {
+    display: grid;
+    grid-template-columns: 132px 1fr;
+    gap: 24px;
+    padding: 26px 0;
+    border-top: 1px dashed var(--line);
+  }
+  .timeline li:first-child { border-top: none; padding-top: 0; }
+  @media (max-width: 640px) { .timeline li { grid-template-columns: 1fr; gap: 6px; } }
+  .timeline .when {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.82rem;
+    color: var(--muted);
+    padding-top: 3px;
+    white-space: nowrap;
+  }
+  .timeline .now .when { color: var(--accent); }
+  .timeline h3 span { font-weight: 400; color: var(--muted); font-size: 0.9rem; }
+  .timeline p { margin: 6px 0 0; font-size: 0.92rem; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .chips span {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* ── 能力 ───────────────── */
+  .skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 36px;
+  }
+  .skills h3 {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .skills p { margin: 0; font-size: 0.92rem; color: var(--muted); }
+
+  /* ── 其他 ───────────────── */
+  .more { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 720px) { .more { grid-template-columns: 1fr; } }
+  .more ul { margin: 0; padding: 0; list-style: none; }
+  .more li { padding: 10px 0; border-top: 1px dashed var(--line); font-size: 0.92rem; color: var(--muted); }
+  .more li:first-child { border-top: none; padding-top: 0; }
+  .more li b { color: var(--ink); font-weight: 600; }
+  .more .side p { margin: 0; font-size: 0.92rem; color: var(--muted); }
+
+  /* ── Footer ───────────────── */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 48px 0 64px;
+  }
+  footer .contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+  }
+  footer .colophon {
+    margin-top: 28px;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  @media print {
+    :root { --bg: #fff; --surface: #fff; --ink: #000; --muted: #333; --line: #bbb; --accent: #8A4717; }
+    .rail, #field, .field-cap { display: none; }
+    .js .reveal { opacity: 1 !important; transform: none !important; }
+    section, .creed { padding: 28px 0; }
+  }
+</style>
+
+<aside class="rail" aria-hidden="true">持續建構・把複雜變簡單・把未知變掌握</aside>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/">maxjkfc</a>
+    <nav>
+      <a href="https://github.com/maxjkfc">GitHub</a>
+      <a href="https://www.linkedin.com/in/maxjkfc/">LinkedIn</a>
+      <a href="mailto:maxjkfc@gmail.com">Email</a>
+    </nav>
+  </header>
+
+  <section class="hero" style="border-top:none">
+    <div>
+      <p class="eyebrow">AI-native Product Engineer · Backend / Infra</p>
+      <h1>江豈鋒<span class="latin">MAX CHIANG</span></h1>
+      <p class="zh-creed">持續建構，把複雜的變成簡單的，<br>把未知的變成掌握的。</p>
+      <p class="motto">Keep building. Simplify complexity.<br>Turn uncertainty into control.</p>
+      <p class="lede">12 年後端與基礎設施，兩次新創持股 CTO、其一公司售出，帶過 12→20 人技術團隊、35 人公司與 4–6 人遠端小隊。擅長在資源受限下從零打造營運系統；2026 年起全面轉入 AI 協作開發，以 multi-agent 工作流每日交付正式環境功能。</p>
+      <div class="hero-links">
+        <a href="mailto:maxjkfc@gmail.com">maxjkfc@gmail.com</a>
+        <a href="https://github.com/maxjkfc">github.com/maxjkfc</a>
+      </div>
+    </div>
+    <div>
+      <canvas id="field" aria-hidden="true"></canvas>
+      <p class="field-cap">uncertainty → control</p>
+    </div>
+  </section>
+
+  <section class="reveal" id="proof">
+    <p class="eyebrow">Proof</p>
+    <h2>量化成果</h2>
+    <div class="metrics">
+      <div class="metric">
+        <div class="num">12 年</div>
+        <div class="label">後端與基礎設施工程</div>
+      </div>
+      <div class="metric">
+        <div class="num">2 次</div>
+        <div class="label">新創持股 CTO，其一公司成功售出</div>
+      </div>
+      <div class="metric">
+        <div class="num">10 萬<em>/日</em></div>
+        <div class="label">高併發交易系統峰值單量，日均 5 萬（2016–18）</div>
+      </div>
+      <div class="metric">
+        <div class="num">80<em>%</em></div>
+        <div class="label">自動化省下的維運成本，同期營收提高 80%（2016–18）</div>
+      </div>
+      <div class="metric">
+        <div class="num">3h<em>→</em>10m</div>
+        <div class="label">教給 AI 的人工營運作業，壓縮 94% 工時（2026）</div>
+      </div>
+      <div class="metric">
+        <div class="num">2 年<em>+</em></div>
+        <div class="label">從零打造的平台低成本啟動、穩定營運中（2023–）</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal" id="ai-native">
+    <p class="eyebrow">Why AI-native</p>
+    <h2>為什麼是 AI-native</h2>
+    <p class="section-lede">AI 工具人人都在用。差別在兩件事：有沒有一套能穩定交付正式環境的協作系統，以及有沒有足夠的工程判斷把關它的輸出。</p>
+    <div class="cols3">
+      <div>
+        <h3><span class="tick">01</span>12 年工程判斷 × AI 槓桿</h3>
+        <p>AI 放大的是既有的資歷：架構決策、高併發 domain、production 直覺。AI 產出得快，對錯由 12 年 production 經驗判斷——這個組合沒有捷徑。</p>
+      </div>
+      <div>
+        <h3><span class="tick">02</span>Multi-agent 開發鏈，每日交付</h3>
+        <p>Claude 撰寫計畫 → Gemini 交叉審查 → Claude 實作 → review subagent 把關。AI 主導開發、本人只任 reviewer 的外部服務整合功能，已上線正式環境，工作流保持每日交付。</p>
+      </div>
+      <div>
+        <h3><span class="tick">03</span>把營運流程教給 AI</h3>
+        <p>一項人工營運作業由 3 小時壓縮到 10 分鐘（−94%）；查帳流程完整交接給 AI，每日自動比對雙資料庫落差。把自己會的變成別人能用的形狀，教了 20 年的人，現在教 AI。</p>
+      </div>
+      <div>
+        <h3><span class="tick">04</span>自建 harness，不只是用工具</h3>
+        <p>個人 LLM 知識庫管線、跨機 agent 記憶系統、Skill 沉澱；約束、驗證、修正的協作系統是每天的第一手實作，不是二手知識。用工具的人換個模型就歸零，建系統的人越用越快。</p>
+      </div>
+      <div>
+        <h3><span class="tick">05</span>可複製到整個團隊</h3>
+        <p>兩次從零建立工程文化（CI/CD、回顧會議、OKR、Event Storming）＋一套已跑順的 AI 工作流：不只自己快，具備把團隊帶進 AI-native 的完整配方。</p>
+      </div>
+    </div>
+  </section>
+
+  <blockquote class="creed reveal">
+    <p>每個技術選型都先問：<br>「這解決的是<strong>現在的問題</strong>，<br>還是想像中的未來？」</p>
+    <div class="src">ENGINEERING CREED</div>
+  </blockquote>
+
+  <section class="reveal" id="timeline">
+    <p class="eyebrow">Track Record</p>
+    <h2>經歷</h2>
+    <p class="arc">敘事弧線：工程師 → CTO → <em>AI-native 使能者</em></p>
+    <ol class="timeline">
+      <li class="now">
+        <div class="when">2023 – 今</div>
+        <div>
+          <h3>Freelancer 技術負責人 <span>｜帶 4–6 人遠端小隊</span></h3>
+          <p>為業主從零打造大型線上服務（Go 微服務＋DDD），低成本啟動、穩定營運超過 2 年。對帳追差、補單重算、原子性更新重構；介接多家外部服務提供者；加密貨幣金流實戰（交易所出入金、冷錢包配置）；深夜攻擊事件一人完成偵測到 GCP 防火牆封鎖。</p>
+          <div class="chips"><span>Go</span><span>DDD</span><span>GKE</span><span>營運 2 年+</span><span>追回約 7 萬差額</span></div>
+        </div>
+      </li>
+      <li>
+        <div class="when">2021 – 2023</div>
+        <div>
+          <h3>泰爾科技 技術長</h3>
+          <p>35 人公司、年營收 3,200 萬、會員 3 萬。循環精品交易平台採 DDD＋CQRS＋Event Driven；工程基建（CI/CD、監控、數據儀表板）與組織文化（OKR、回顧會議、Event Storming）皆從零建立。2023 年公司成功售出。</p>
+          <div class="chips"><span>CQRS</span><span>Event Driven</span><span>35 人</span><span>年營收 3,200 萬</span><span>公司售出</span></div>
+        </div>
+      </li>
+      <li>
+        <div class="when">2018 – 2021</div>
+        <div>
+          <h3>阿斯特資訊 共同創辦人兼技術執行長</h3>
+          <p>6 人新創，2019 年營收 800 萬、交付 12 項專案。案型橫跨營運與數據系統：協會報名、電信數據報表、全國高中職實習計畫平台、發電變動量指標、選舉開票統計。</p>
+          <div class="chips"><span>0→1 ×12 專案</span><span>營收 800 萬</span></div>
+        </div>
+      </li>
+      <li>
+        <div class="when">2016 – 2018</div>
+        <div>
+          <h3>長青資訊 總工程師</h3>
+          <p>高併發交易系統 3 個月草創上線：日均 5 萬單、峰值 10 萬單。自動化省 80% 維運成本、同期營收提高 80%；介接 10+ 外部服務提供者與 10+ 業務平台；技術團隊 12→20 人。</p>
+          <div class="chips"><span>Golang 微服務</span><span>Docker Swarm</span><span>RabbitMQ</span><span>團隊 12→20</span></div>
+        </div>
+      </li>
+      <li>
+        <div class="when">2015 – 2016</div>
+        <div>
+          <h3>上海謹道電子商務（環球贏家）資深系統工程師</h3>
+          <p>私有雲集群建置降低建置成本 80%（阿里雲 VPC / Flannel / VLAN）；電商平台以微服務架構重建、6 個月穩定上線；Go 業務系統：發貨、分潤、商品備案號管理，介接 ERP / 保稅倉 / 微信平台。</p>
+          <div class="chips"><span>私有雲 −80% 成本</span><span>6 個月上線</span></div>
+        </div>
+      </li>
+      <li>
+        <div class="when">2014 – 2015</div>
+        <div>
+          <h3>凡谷興業 系統開發工程師</h3>
+          <p>交易稽核模組與交易模組重構優化（PHP / MySQL / Redis / Gearman）——高併發交易與資料一致性 domain 的起點。</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="reveal" id="skills">
+    <p class="eyebrow">Capabilities</p>
+    <h2>核心能力</h2>
+    <div class="skills">
+      <div>
+        <h3>BACKEND</h3>
+        <p>Go 微服務全鏈路：gRPC + grpc-gateway、WebSocket、NATS / RabbitMQ；DDD / CQRS / Event Driven；高併發交易與資料一致性（對帳追差、補單重算、原子性更新重構）。</p>
+      </div>
+      <div>
+        <h3>INFRA</h3>
+        <p>Kubernetes（GKE）、GCP、阿里雲；Docker Swarm→K8s 兩代容器編排；三代 CI/CD（Jenkins→GitHub Actions）自建經驗；Prometheus + Slack bot 監控告警。</p>
+      </div>
+      <div>
+        <h3>DATABASE</h3>
+        <p>MongoDB（replica set on GKE）、CockroachDB、MySQL、Redis。</p>
+      </div>
+      <div>
+        <h3>AI COLLABORATION</h3>
+        <p>Multi-agent 開發鏈設計、Harness / Context Engineering、subagent 編排、Skill 沉澱、跨機 agent 記憶系統——2026 年起每天的第一手實作。</p>
+      </div>
+      <div>
+        <h3>BUSINESS</h3>
+        <p>商業思維學院系統訓練；營收、留存與營運指標直接作為工程決策輸入；兩次創業的失敗代價已轉化為可言說的判斷準則。</p>
+      </div>
+      <div>
+        <h3>LANGUAGES</h3>
+        <p>Go / Python / Shell 主力；PHP / C / Rust 可讀可改，跨語言接手專案不陌生。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal" id="more">
+    <p class="eyebrow">More</p>
+    <h2>Side Project・學歷與著作</h2>
+    <div class="more">
+      <div class="side">
+        <h3>AI 對話應用（2026 –）</h3>
+        <p>核心挑戰是讓 AI 回應更像真人；0.2 beta 已完成。從 harness 設計、多 agent 編排到產品迭代，全程 AI 協作開發。產品公開前暫以匿名呈現。</p>
+      </div>
+      <div>
+        <ul>
+          <li><b>國立臺中科技大學</b> 資訊管理系 碩士（2011–2014）／學士（2007–2011）</li>
+          <li><b>專利</b>「電能側寫及預測系統」新型 M492487（2014）</li>
+          <li><b>期刊論文</b> SCI（J. of Medical Systems）與 CAEE 各一篇（2015）——Linux kernel 電能側寫、Android 核心修改的底層經驗</li>
+          <li><b>RHCSA</b> Red Hat Certified System Administrator（2011）</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="contact">
+      <span>台中市，台灣</span>
+      <a href="mailto:maxjkfc@gmail.com">maxjkfc@gmail.com</a>
+      <a href="https://github.com/maxjkfc">github.com/maxjkfc</a>
+      <a href="https://www.linkedin.com/in/maxjkfc/">linkedin.com/in/maxjkfc</a>
+    </div>
+    <p class="colophon">這一頁本身就是作品的一部分：由本人與 Claude 以 multi-agent 工作流協作設計與產出。</p>
+  </footer>
+</div>
+
+<script>
+  document.documentElement.classList.add('js');
+
+  // 區段進場
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+  // Hero：粒子自混沌收斂成網格（uncertainty → control）
+  (function () {
+    var c = document.getElementById('field');
+    var ctx = c.getContext('2d');
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var dots = [], dpr = 1;
+
+    function ease(p) { return 1 - Math.pow(1 - p, 3); }
+    function color() { return getComputedStyle(c).color; }
+
+    function build() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = c.clientWidth, h = c.clientHeight;
+      c.width = w * dpr; c.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var gap = 26, mx = 14, my = 14;
+      var cols = Math.max(4, Math.floor((w - mx * 2) / gap));
+      var rows = Math.max(4, Math.floor((h - my * 2) / gap));
+      var ox = (w - (cols - 1) * gap) / 2, oy = (h - (rows - 1) * gap) / 2;
+      var targets = [];
+      for (var r = 0; r < rows; r++)
+        for (var q = 0; q < cols; q++)
+          targets.push({ tx: ox + q * gap, ty: oy + r * gap });
+      if (dots.length !== targets.length) {
+        dots = targets.map(function (t, i) {
+          return {
+            tx: t.tx, ty: t.ty,
+            sx: Math.random() * w, sy: Math.random() * h,
+            delay: (t.tx / w) * 700 + Math.random() * 500,
+            phase: Math.random() * Math.PI * 2
+          };
+        });
+      } else {
+        dots.forEach(function (d, i) { d.tx = targets[i].tx; d.ty = targets[i].ty; });
+      }
+    }
+
+    function draw(t) {
+      ctx.clearRect(0, 0, c.clientWidth, c.clientHeight);
+      ctx.fillStyle = color();
+      dots.forEach(function (d) {
+        var p = reduce ? 1 : Math.min(Math.max((t - d.delay) / 1400, 0), 1);
+        var e = ease(p);
+        var x = d.sx + (d.tx - d.sx) * e;
+        var y = d.sy + (d.ty - d.sy) * e;
+        if (p >= 1) {
+          x += Math.sin(t / 1600 + d.phase) * 1.1;
+          y += Math.cos(t / 1900 + d.phase) * 1.1;
+        }
+        ctx.beginPath();
+        ctx.arc(x, y, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    build();
+    if (reduce) {
+      draw(0);
+      // 主題切換時重繪一次
+      new MutationObserver(function () { draw(0); })
+        .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { draw(0); });
+    } else {
+      var start = null;
+      (function frame(ts) {
+        if (start === null) start = ts;
+        var t = ts - start;
+        draw(t);
+        // ponytail: 收斂完成後降到 ~7fps 呼吸，閒置分頁不吃電
+        if (t < 2800) requestAnimationFrame(frame);
+        else setTimeout(function () { requestAnimationFrame(frame); }, 140);
+      })(0);
+    }
+    window.addEventListener('resize', build);
+  })();
+</script>
+
+</body>
+</html>
