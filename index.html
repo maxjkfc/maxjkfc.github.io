@@ -10,16 +10,14 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-GFW7V018T9');
 </script>
-<title>江豈鋒 Max Chiang</title>
-<meta name="description" content="江豈鋒 Max Chiang — 後端與基礎設施工程師、AI 協作工程實踐者。持續建構，把複雜的變成簡單的，把未知的變成掌握的。">
+<title>江豈鋒 Max Chiang — System Builder</title>
+<meta name="description" content="江豈鋒 Max Chiang — 將複雜問題建構成可長期運作的產品、工程、團隊與 AI 協作系統。">
 <meta property="og:type" content="website">
-<meta property="og:title" content="江豈鋒 Max Chiang">
-<meta property="og:description" content="江豈鋒 Max Chiang — 後端與基礎設施工程師、AI 協作工程實踐者。持續建構，把複雜的變成簡單的，把未知的變成掌握的。">
+<meta property="og:title" content="江豈鋒 Max Chiang — System Builder">
+<meta property="og:description" content="持續建構，讓複雜變得簡單，讓未知變成可控。">
 <meta property="og:url" content="https://maxjkfc.github.io/">
 <meta property="og:locale" content="zh_TW">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎛️</text></svg>">
-</head>
-<body>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
 <style>
   :root {
     --bg: #F3F5F7;
@@ -34,191 +32,208 @@ gtag('config', 'G-GFW7V018T9');
   @media (prefers-color-scheme: dark) {
     :root { --bg: #0F1317; --ink: #E6EBEF; --muted: #94A1AB; --line: #29323B; --accent: #D6905A; --accent-strong: #E3A876; }
   }
-  :root[data-theme="dark"] { --bg: #0F1317; --ink: #E6EBEF; --muted: #94A1AB; --line: #29323B; --accent: #D6905A; --accent-strong: #E3A876; }
-  :root[data-theme="light"] { --bg: #F3F5F7; --ink: #182129; --muted: #56646F; --line: #D8DEE4; --accent: #A2571F; --accent-strong: #8A4717; }
-
   * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--font-sans);
-    font-size: 16px;
-    line-height: 1.85;
-    -webkit-font-smoothing: antialiased;
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-sans); font-size: 16px; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: var(--accent); }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .wrap { width: min(100% - 48px, 1440px); margin: 0 auto; }
+  .mono, .section-label { font-family: var(--font-mono); }
+  .top { display: flex; align-items: center; justify-content: space-between; min-height: 74px; border-bottom: 1px solid var(--line); font-family: var(--font-mono); }
+  .brand { font-size: 1.25rem; letter-spacing: .08em; }
+  .top nav { display: flex; gap: 42px; font-size: .86rem; }
+  .mobile-nav { display: none; position: relative; }
+  .mobile-nav summary { list-style: none; cursor: pointer; font-family: var(--font-mono); }
+  .mobile-nav summary::-webkit-details-marker { display: none; }
+  .mobile-nav nav { position: absolute; right: 0; top: 32px; z-index: 3; display: grid; gap: 0; width: 180px; background: var(--bg); border: 1px solid var(--line); }
+  .mobile-nav nav a { padding: 12px 16px; border-top: 1px solid var(--line); }
+  .mobile-nav nav a:first-child { border-top: 0; }
+  .section-label { margin: 0; color: var(--accent); font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; }
+  .hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(420px, .8fr); gap: clamp(48px, 7vw, 112px); padding: clamp(64px, 8vw, 120px) 0 84px; border-bottom: 1px solid var(--line); }
+  .hero h1 { max-width: 14em; margin: 22px 0 28px; font-size: clamp(2.8rem, 4vw, 4.1rem); line-height: 1.28; letter-spacing: -.035em; text-wrap: balance; }
+  .hero-copy { max-width: 38em; margin: 0; color: var(--muted); font-size: clamp(1rem, 1.35vw, 1.25rem); }
+  .actions { display: flex; gap: 14px; margin-top: 42px; }
+  .button { display: inline-flex; align-items: center; justify-content: space-between; min-width: 210px; min-height: 58px; padding: 0 22px; border: 1px solid var(--line); font-weight: 600; }
+  .button::after { content: "→"; font-family: var(--font-mono); margin-left: 28px; }
+  .button.primary { color: #fff; background: var(--accent); border-color: var(--accent); }
+  .button.primary:hover { color: #fff; background: var(--accent-strong); }
+  .system-map { align-self: center; font-family: var(--font-mono); font-size: .76rem; }
+  .map-title { margin: 0 0 20px; text-align: center; letter-spacing: .12em; }
+  .map-flow { display: grid; grid-template-columns: 1fr 28px 1fr 28px 1fr; align-items: center; }
+  .map-inputs { display: grid; gap: 10px; }
+  .map-node { min-height: 62px; padding: 12px 14px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: center; }
+  .map-node span { margin-top: 2px; color: var(--muted); font-size: .67rem; }
+  .map-process { min-height: 180px; border: 1px dashed var(--accent); color: var(--accent); align-items: center; text-align: center; }
+  .map-output { min-height: 180px; border-color: var(--accent); color: var(--accent); }
+  .map-output span { color: var(--muted); }
+  .map-arrow { text-align: center; color: var(--accent); }
+  .section { padding: 78px 0; border-bottom: 1px solid var(--line); }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 36px; }
+  .section h2 { margin: 0; font-family: var(--font-mono); font-size: clamp(1.8rem, 3vw, 3rem); letter-spacing: .02em; }
+  .section-note { margin: 0; color: var(--muted); font-family: var(--font-mono); font-size: .72rem; }
+  .build-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .build-item { min-height: 260px; padding: 28px; border-left: 1px solid var(--line); }
+  .build-item:first-child { border-left: 0; }
+  .build-item .num { color: var(--accent); font-family: var(--font-mono); }
+  .build-item h3 { margin: 16px 0 18px; font-size: 1.1rem; }
+  .build-item p { margin: 0; color: var(--muted); font-size: .93rem; }
+  .cases { border-top: 1px solid var(--line); }
+  .case { display: grid; grid-template-columns: 70px minmax(250px, .8fr) 1.2fr; gap: 28px; padding: 44px 0; border-bottom: 1px solid var(--line); }
+  .case-num { color: var(--accent); font-family: var(--font-mono); font-size: 1.1rem; }
+  .case h3 { margin: 0; font-size: clamp(1.5rem, 2.5vw, 2.2rem); }
+  .case-result { margin: 10px 0 0; color: var(--muted); font-family: var(--font-mono); }
+  .case-result strong { color: var(--accent); }
+  .case-detail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .case-detail h4 { margin: 0 0 8px; color: var(--accent); font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; }
+  .case-detail p { margin: 0; color: var(--muted); font-size: .86rem; }
+  .method { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .method-item { position: relative; padding: 30px 26px; border-left: 1px solid var(--line); }
+  .method-item:first-child { border-left: 0; }
+  .method-item:not(:last-child)::after { content: "→"; position: absolute; right: -10px; top: 28px; z-index: 1; background: var(--bg); color: var(--accent); padding: 0 4px; font-family: var(--font-mono); }
+  .method-item b { display: block; font-family: var(--font-mono); }
+  .method-item span { display: block; margin-top: 8px; color: var(--muted); font-size: .88rem; }
+  .now-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+  .now-item { padding: 28px 28px 0 0; }
+  .now-item h3 { margin: 0 0 10px; font-size: 1rem; }
+  .now-item p { margin: 0; color: var(--muted); font-size: .9rem; }
+  .contact-cta { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 62px 0; }
+  .contact-cta h2 { max-width: 18em; margin: 0; font-size: clamp(1.8rem, 3.5vw, 3.3rem); line-height: 1.35; }
+  .contact-cta h2 strong { color: var(--accent); }
+  .contact-links { display: flex; gap: 24px; font-family: var(--font-mono); font-size: .82rem; }
+  footer { display: flex; justify-content: space-between; gap: 24px; padding: 24px 0 44px; border-top: 1px solid var(--line); color: var(--muted); font-family: var(--font-mono); font-size: .72rem; }
+  @media (max-width: 900px) {
+    .top > nav { display: none; }
+    .mobile-nav { display: block; }
+    .hero { grid-template-columns: 1fr; }
+    .system-map { max-width: 620px; }
+    .build-grid { grid-template-columns: repeat(2, 1fr); }
+    .build-item:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
+    .build-item:nth-child(4) { border-top: 1px solid var(--line); }
+    .case { grid-template-columns: 52px 1fr; }
+    .case-detail { grid-column: 2; }
   }
-  ::selection { background: var(--accent); color: var(--bg); }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 4px; }
-  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
-
-  .rail {
-    position: fixed;
-    left: 26px;
-    top: 50%;
-    transform: translateY(-50%);
-    writing-mode: vertical-rl;
-    font-size: 0.78rem;
-    letter-spacing: 0.5em;
-    color: var(--muted);
-    user-select: none;
-  }
-  @media (max-width: 1100px) { .rail { display: none; } }
-
-  .wrap { max-width: 680px; margin: 0 auto; padding: 0 24px; }
-
-  .top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 22px 0 0;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-  }
-  .top .brand { color: var(--muted); letter-spacing: 0.08em; }
-  .top nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
-  .top nav a {
-    padding: 6px 14px;
-    border: 1px solid var(--line);
-    color: var(--ink);
-  }
-  .top nav a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
-
-  main { padding: 88px 0 32px; }
-  @media (max-width: 640px) { main { padding: 56px 0 24px; } }
-
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin: 0 0 14px;
-  }
-  h1 {
-    margin: 0;
-    font-size: clamp(2.4rem, 7vw, 3.4rem);
-    font-weight: 700;
-    line-height: 1.15;
-  }
-  h1 .latin {
-    display: block;
-    font-size: 0.42em;
-    font-weight: 500;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    margin-top: 10px;
-    font-family: var(--font-mono);
-  }
-  .zh-creed {
-    margin: 30px 0 0;
-    font-size: 1.22rem;
-    font-weight: 600;
-    line-height: 1.75;
-    text-wrap: balance;
-  }
-  .motto {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--accent);
-    letter-spacing: 0.03em;
-    margin: 10px 0 0;
-  }
-  .bio { margin: 30px 0 0; color: var(--muted); }
-  .bio b { color: var(--ink); font-weight: 600; }
-  .tags {
-    margin: 20px 0 0;
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--muted);
-    letter-spacing: 0.04em;
-  }
-
-  .now { margin-top: 56px; }
-  .now h2 {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    color: var(--accent);
-    font-weight: 600;
-    margin: 0 0 14px;
-  }
-  .now ul { margin: 0; padding: 0; list-style: none; }
-  .now li {
-    padding: 12px 0;
-    border-top: 1px dashed var(--line);
-    font-size: 0.94rem;
-    color: var(--muted);
-  }
-  .now li b { color: var(--ink); font-weight: 600; }
-
-  .links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 48px; align-items: center; }
-  .links a {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    padding: 9px 18px;
-    border: 1px solid var(--line);
-    color: var(--ink);
-  }
-  .links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
-  .links a.primary {
-    border-color: var(--accent);
-    background: var(--accent);
-    color: var(--bg);
-    font-weight: 600;
-  }
-  .links a.primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); color: var(--bg); }
-
-  footer {
-    border-top: 1px solid var(--line);
-    margin-top: 72px;
-    padding: 28px 0 56px;
-    font-size: 0.8rem;
-    color: var(--muted);
+  @media (max-width: 620px) {
+    .wrap { width: min(100% - 32px, 1440px); }
+    .hero { padding: 52px 0 58px; gap: 54px; }
+    .hero h1 { margin-top: 0; font-size: clamp(2.5rem, 13vw, 4rem); }
+    .section-label { display: none; }
+    .actions { display: grid; }
+    .button { width: 100%; }
+    .map-flow { grid-template-columns: 1fr; gap: 12px; }
+    .map-arrow { transform: rotate(90deg); }
+    .map-process, .map-output { min-height: 90px; }
+    .section { padding: 60px 0; }
+    .section-head { display: block; }
+    .section-note { margin-top: 10px; }
+    .build-grid { grid-template-columns: 1fr; }
+    .build-item { min-height: auto; padding: 24px 8px; border-left: 0; border-top: 1px solid var(--line); }
+    .build-item:first-child { border-top: 0; }
+    .case { grid-template-columns: 38px 1fr; gap: 14px; }
+    .case-detail { grid-template-columns: 1fr; }
+    .method { grid-template-columns: 1fr; }
+    .method-item { border-left: 0; border-top: 1px solid var(--line); }
+    .method-item:first-child { border-top: 0; }
+    .method-item:not(:last-child)::after { right: 16px; top: auto; bottom: -13px; transform: rotate(90deg); }
+    .now-grid { grid-template-columns: 1fr; }
+    .contact-cta { display: block; }
+    .contact-links { margin-top: 30px; flex-wrap: wrap; }
+    footer { display: block; }
+    footer span { display: block; margin-top: 8px; }
   }
 </style>
-
-<aside class="rail" aria-hidden="true">持續建構・把複雜變簡單・把未知變掌握</aside>
-
+</head>
+<body>
 <div class="wrap">
   <header class="top">
-    <span class="brand">maxjkfc</span>
-    <nav>
+    <a class="brand" href="/">maxjkfc</a>
+    <nav aria-label="主要導覽">
+      <a href="#systems">Systems</a>
+      <a href="#now">Now</a>
       <a href="/resume/">Resume</a>
       <a href="https://github.com/maxjkfc">GitHub</a>
-      <a href="https://www.linkedin.com/in/maxjkfc/">LinkedIn</a>
     </nav>
+    <details class="mobile-nav">
+      <summary>MENU</summary>
+      <nav aria-label="行動版導覽">
+        <a href="#systems">Systems</a><a href="#now">Now</a><a href="/resume/">Resume</a><a href="https://github.com/maxjkfc">GitHub</a>
+      </nav>
+    </details>
   </header>
 
   <main>
-    <p class="eyebrow">Backend / Infra · AI-Native · Taichung, Taiwan</p>
-    <h1>江豈鋒<span class="latin">MAX CHIANG</span></h1>
-    <p class="zh-creed">持續建構，把複雜的變成簡單的，<br>把未知的變成掌握的。</p>
-    <p class="motto">Keep building. Simplify complexity. Turn uncertainty into control.</p>
-
-    <p class="bio">後端與基礎設施出身，12 年在資源受限下從零打造營運系統；當過兩次新創持股 CTO，現在帶著 4–6 人遠端小隊為業主營運大型線上服務。2026 年起把這套經驗轉向 AI 協作開發，與 AI 一起寫系統是每天的日常，不是口號。</p>
-
-    <section class="now">
-      <h2>Now</h2>
-      <ul>
-        <li><b>Freelancer 技術負責人</b>——高併發線上服務的架構與營運（Go 微服務＋Kubernetes），穩定營運 2 年+。</li>
-        <li><b>AI 協作工程</b>——multi-agent 開發鏈、harness 與個人知識系統的第一手實作。</li>
-        <li><b>AI 對話應用 side project</b>——讓 AI 回應更像真人，0.2 beta；產品公開前暫以匿名呈現。</li>
-      </ul>
+    <section class="hero">
+      <div>
+        <p class="section-label">System Builder · Product / Engineering / AI</p>
+        <h1>持續建構，讓複雜變得簡單，讓未知變成可控。</h1>
+        <p class="hero-copy">12 年來，我從零建立產品、技術架構、團隊與營運流程。現在，我將累積的工程判斷轉化為人與 AI 都能可靠執行的系統。</p>
+        <div class="actions">
+          <a class="button primary" href="#systems">查看我建構的系統</a>
+          <a class="button" href="/resume/">完整履歷</a>
+        </div>
+      </div>
+      <div class="system-map" aria-label="從複雜輸入到可靠系統的建構流程">
+        <p class="map-title">SYSTEM BUILDER</p>
+        <div class="map-flow">
+          <div class="map-inputs">
+            <div class="map-node">Problem<span>真正值得解決的問題</span></div>
+            <div class="map-node">People<span>有脈絡的人與團隊</span></div>
+            <div class="map-node">Knowledge<span>領域知識與經驗</span></div>
+            <div class="map-node">Constraints<span>時間、資源與取捨</span></div>
+          </div>
+          <div class="map-arrow">→</div>
+          <div class="map-node map-process">SYSTEMIZE<span>拆解<br>組織<br>標準化<br>自動化</span></div>
+          <div class="map-arrow">→</div>
+          <div class="map-node map-output">Reliable System<span>可預測<br>可驗證<br>可維運<br>可持續改善</span></div>
+        </div>
+      </div>
     </section>
 
-    <div class="links">
-      <a class="primary" href="/resume/">閱讀完整履歷 →</a>
-      <a href="mailto:maxjkfc@gmail.com">Email</a>
-      <a href="https://github.com/maxjkfc">GitHub</a>
-      <a href="https://www.linkedin.com/in/maxjkfc/">LinkedIn</a>
-    </div>
+    <section class="section" id="systems">
+      <div class="section-head"><h2>I BUILD SYSTEMS.</h2><p class="section-note">SYSTEMS, NOT ONE-OFF FEATURES.</p></div>
+      <div class="build-grid">
+        <article class="build-item"><span class="num">01</span><h3>Product Systems</h3><p>從 0 到 1 定義產品策略與路線圖，對齊使用者價值、商業模式與交付節奏，建立可驗證、可成長的產品系統。</p></article>
+        <article class="build-item"><span class="num">02</span><h3>Engineering Systems</h3><p>設計可擴展的技術架構與工程實踐，建立開發流程、自動化與品質機制，確保交付速度與系統可靠性。</p></article>
+        <article class="build-item"><span class="num">03</span><h3>Team Systems</h3><p>建立清楚的協作方式、決策機制與工程文化，讓知識可以流動，團隊能持續學習並放大成果。</p></article>
+        <article class="build-item"><span class="num">04</span><h3>AI Execution Systems</h3><p>把工程判斷整合進工作流、知識庫與驗收機制，讓人與 AI 協作並穩定產生可上線的成果。</p></article>
+      </div>
+    </section>
 
-    <p class="tags">#AI協作工程 · #持續建構 · #從零到一</p>
+    <section class="section" aria-labelledby="selected-title">
+      <div class="section-head"><h2 id="selected-title">SELECTED SYSTEMS</h2><p class="section-note">CONTEXT → SYSTEM → OUTCOME</p></div>
+      <div class="cases">
+        <article class="case"><div class="case-num">01</div><div><h3>高併發營運系統</h3><p class="case-result">峰值 10 萬單／日 · 維運成本 <strong>−80%</strong></p></div><div class="case-detail"><div><h4>CONTEXT</h4><p>在高交易量與有限資源下，系統必須快速上線並維持一致性。</p></div><div><h4>SYSTEM</h4><p>建立微服務架構、非同步處理、資料分片與營運工具。</p></div><div><h4>OUTCOME</h4><p>3 個月草創上線，支撐日均 5 萬、峰值 10 萬單。</p></div></div></article>
+        <article class="case"><div class="case-num">02</div><div><h3>公司與產品系統</h3><p class="case-result">35 人規模 · 公司成功出售</p></div><div class="case-detail"><div><h4>CONTEXT</h4><p>產品、技術、營運與組織都需要從零建立。</p></div><div><h4>SYSTEM</h4><p>建立產品核心、工程基建、數據儀表板與團隊文化。</p></div><div><h4>OUTCOME</h4><p>形成可持續營運的 35 人公司，並於 2023 年成功出售。</p></div></div></article>
+        <article class="case"><div class="case-num">03</div><div><h3>AI-native Delivery System</h3><p class="case-result">人工流程 <strong>3h → 10m</strong> · 正式環境持續交付</p></div><div class="case-detail"><div><h4>CONTEXT</h4><p>知識依賴個人、流程重複，交付品質難以穩定複製。</p></div><div><h4>SYSTEM</h4><p>把規格、實作、review、驗證與知識沉澱整合成 multi-agent 工作流。</p></div><div><h4>OUTCOME</h4><p>營運流程工時壓縮 94%，AI 協作成果持續交付正式環境。</p></div></div></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="method-title">
+      <div class="section-head"><h2 id="method-title">HOW I BUILD</h2><p class="section-note">A REPEATABLE SYSTEM, NOT A ONE-OFF EFFORT.</p></div>
+      <div class="method">
+        <div class="method-item"><b>01 · Understand</b><span>釐清問題本質、現實限制與真正值得解決的目標。</span></div>
+        <div class="method-item"><b>02 · Systemize</b><span>把人的判斷轉化成可理解、可執行的結構與流程。</span></div>
+        <div class="method-item"><b>03 · Verify</b><span>用測試、review 與真實結果確認系統確實做對。</span></div>
+        <div class="method-item"><b>04 · Scale</b><span>沉澱知識與自動化，讓成果能被複製並持續改善。</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="now">
+      <div class="section-head"><h2>NOW</h2><p class="section-note">CURRENT FOCUS</p></div>
+      <div class="now-grid">
+        <article class="now-item"><h3>Freelancer 技術負責人</h3><p>帶領 4–6 人遠端團隊，負責大型線上服務的產品交付、系統架構與長期營運。</p></article>
+        <article class="now-item"><h3>AI 協作工程</h3><p>持續實作 multi-agent 開發鏈、harness、知識庫與跨機 agent 記憶系統。</p></article>
+        <article class="now-item"><h3>AI 對話應用</h3><p>探索更自然的 AI 互動體驗；目前完成 0.2 beta，產品公開前暫以匿名呈現。</p></article>
+      </div>
+    </section>
+
+    <section class="contact-cta">
+      <h2>如果你需要一個把<strong>混亂變成系統</strong>的人。</h2>
+      <div class="contact-links"><a href="mailto:maxjkfc@gmail.com">Email →</a><a href="https://www.linkedin.com/in/maxjkfc/">LinkedIn →</a></div>
+    </section>
   </main>
 
-  <footer>這個站由本人與 Claude 以 multi-agent 工作流協作設計與產出。</footer>
+  <footer><span>© 2026 Max Chiang</span><span>Taichung, Taiwan · UTC+8</span></footer>
 </div>
-
 </body>
 </html>

@@ -10,16 +10,14 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-GFW7V018T9');
 </script>
-<title>江豈鋒 Max Chiang — AI-native Product Engineer</title>
-<meta name="description" content="12 年後端與基礎設施、兩次新創持股 CTO；2026 年起全面轉入 AI 協作開發，以 multi-agent 工作流每日交付正式環境功能。">
+<title>江豈鋒 Max Chiang — Product Engineer &amp; System Builder</title>
+<meta name="description" content="12 年後端與基礎設施經驗，擅長在有限資源下，將複雜問題建構成可長期運作的產品、工程與 AI 協作系統。">
 <meta property="og:type" content="website">
-<meta property="og:title" content="江豈鋒 Max Chiang — AI-native Product Engineer">
-<meta property="og:description" content="12 年後端與基礎設施、兩次新創持股 CTO；2026 年起全面轉入 AI 協作開發，以 multi-agent 工作流每日交付正式環境功能。">
+<meta property="og:title" content="江豈鋒 Max Chiang — Product Engineer &amp; System Builder">
+<meta property="og:description" content="將複雜問題建構成可長期運作的系統。">
 <meta property="og:url" content="https://maxjkfc.github.io/resume/">
 <meta property="og:locale" content="zh_TW">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎛️</text></svg>">
-</head>
-<body>
 <style>
   :root {
     --bg: #F3F5F7;
@@ -131,8 +129,8 @@ gtag('config', 'G-GFW7V018T9');
   /* ── Hero ───────────────── */
   .hero {
     display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: 48px;
+    grid-template-columns: minmax(0, 1.05fr) minmax(380px, .95fr);
+    gap: 64px;
     align-items: center;
     padding: 72px 0 64px;
   }
@@ -177,6 +175,14 @@ gtag('config', 'G-GFW7V018T9');
     color: var(--muted);
   }
   .lede b { color: var(--ink); font-weight: 600; }
+  .hero-claim {
+    max-width: 22em;
+    margin: 28px 0 0;
+    font-size: clamp(1.35rem, 2.4vw, 2rem);
+    font-weight: 650;
+    line-height: 1.55;
+    text-wrap: balance;
+  }
   .tags {
     margin: 24px 0 0;
     font-family: var(--font-mono);
@@ -194,21 +200,15 @@ gtag('config', 'G-GFW7V018T9');
   }
   .hero-links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 
-  #field {
-    width: 100%;
-    height: 420px;
-    display: block;
-    color: var(--dot);
-  }
-  @media (max-width: 860px) { #field { height: 200px; } }
-  .field-cap {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.14em;
-    color: var(--muted);
-    text-align: right;
-    margin-top: 8px;
-  }
+  .delivery-map { align-self: center; font-family: var(--font-mono); font-size: .7rem; }
+  .delivery-map > p { margin: 0 0 18px; text-align: center; letter-spacing: .14em; }
+  .delivery-flow { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px dashed var(--line); padding: 28px 20px; }
+  .delivery-step { position: relative; min-height: 126px; padding: 18px 12px; border-left: 1px solid var(--line); text-align: center; }
+  .delivery-step:first-child { border-left: 0; }
+  .delivery-step:not(:last-child)::after { content: "→"; position: absolute; right: -7px; top: 49px; z-index: 1; background: var(--bg); color: var(--accent); }
+  .delivery-step b { display: block; margin-bottom: 12px; color: var(--accent); letter-spacing: .08em; }
+  .delivery-step span { color: var(--muted); font-family: var(--font-sans); line-height: 1.55; }
+  .delivery-loop { margin: 12px 0 0; color: var(--muted); text-align: center; font-size: .65rem; letter-spacing: .1em; }
 
   /* ── 區段共用 ───────────────── */
   section { padding: 56px 0; border-top: 1px solid var(--line); }
@@ -230,9 +230,13 @@ gtag('config', 'G-GFW7V018T9');
   /* ── 數字 ───────────────── */
   .metrics {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 36px 28px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
   }
+  .metric { padding: 28px; border-left: 1px solid var(--line); }
+  .metric:first-child { border-left: 0; }
   .metric .num {
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
@@ -242,6 +246,13 @@ gtag('config', 'G-GFW7V018T9');
   }
   .metric .num em { font-style: normal; color: var(--accent); }
   .metric .label { margin-top: 6px; font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  .systems-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .system-item { padding: 28px; border-left: 1px solid var(--line); }
+  .system-item:first-child { border-left: 0; }
+  .system-item .tick { color: var(--accent); font-family: var(--font-mono); font-size: .78rem; }
+  .system-item h3 { margin-top: 18px; }
+  .system-item p { margin: 0; color: var(--muted); font-size: .9rem; }
 
   /* ── AI-native ───────────────── */
   .section-lede {
@@ -374,11 +385,27 @@ gtag('config', 'G-GFW7V018T9');
 
   @media print {
     :root { --bg: #fff; --surface: #fff; --ink: #000; --muted: #333; --line: #bbb; --accent: #8A4717; }
-    .rail, #field, .field-cap { display: none; }
+    .rail, .delivery-map { display: none; }
     .js .reveal { opacity: 1 !important; transform: none !important; }
     section, .creed { padding: 28px 0; }
   }
+  @media (max-width: 760px) {
+    .top nav { gap: 0; }
+    .top nav a:not(:first-child) { display: none; }
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .metric:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
+    .metric:nth-child(4) { border-top: 1px solid var(--line); }
+    .systems-grid { grid-template-columns: 1fr; }
+    .system-item { border-left: 0; border-top: 1px solid var(--line); }
+    .system-item:first-child { border-top: 0; }
+    .delivery-flow { grid-template-columns: 1fr; }
+    .delivery-step { min-height: auto; border-left: 0; border-top: 1px solid var(--line); }
+    .delivery-step:first-child { border-top: 0; }
+    .delivery-step:not(:last-child)::after { right: 14px; top: auto; bottom: -10px; transform: rotate(90deg); }
+  }
 </style>
+</head>
+<body>
 
 <aside class="rail" aria-hidden="true">持續建構・把複雜變簡單・把未知變掌握</aside>
 
@@ -386,6 +413,7 @@ gtag('config', 'G-GFW7V018T9');
   <header class="top">
     <a class="brand" href="/">maxjkfc</a>
     <nav>
+      <a href="/">Home</a>
       <a href="https://github.com/maxjkfc">GitHub</a>
       <a href="https://www.linkedin.com/in/maxjkfc/">LinkedIn</a>
       <a href="mailto:maxjkfc@gmail.com">Email</a>
@@ -394,33 +422,34 @@ gtag('config', 'G-GFW7V018T9');
 
   <section class="hero" style="border-top:none">
     <div>
-      <p class="eyebrow">AI-native Product Engineer · Backend / Infra</p>
+      <p class="eyebrow">AI-native Product Engineer · Technical Leader</p>
       <h1>江豈鋒<span class="latin">MAX CHIANG</span></h1>
-      <p class="zh-creed">持續建構，把複雜的變成簡單的，<br>把未知的變成掌握的。</p>
-      <p class="motto">Keep building. Simplify complexity.<br>Turn uncertainty into control.</p>
-      <p class="lede">12 年後端與基礎設施，兩次新創持股 CTO、其一公司售出，帶過 12→20 人技術團隊、35 人公司與 4–6 人遠端小隊。擅長在資源受限下從零打造營運系統；2026 年起把這套經驗轉向 AI 協作開發，以 multi-agent 工作流每日交付正式環境功能。</p>
+      <p class="hero-claim">擅長在有限資源下，將複雜問題建構成可長期運作的系統。</p>
+      <p class="lede">12 年後端與基礎設施經驗，曾兩度擔任新創持股 CTO，其中一家公司成功出售。從產品、技術架構到團隊與營運流程，皆具備 0→1 建構經驗；目前將工程判斷、review 與驗證機制整合進 multi-agent 交付流程。</p>
       <div class="hero-links">
         <a href="mailto:maxjkfc@gmail.com">maxjkfc@gmail.com</a>
         <a href="https://github.com/maxjkfc">github.com/maxjkfc</a>
       </div>
     </div>
-    <div>
-      <canvas id="field" aria-hidden="true"></canvas>
-      <p class="field-cap">uncertainty → control</p>
+    <div class="delivery-map" aria-label="AI-native 交付流程">
+      <p>SYSTEM BUILDER · DELIVERY LOOP</p>
+      <div class="delivery-flow">
+        <div class="delivery-step"><b>PLAN</b><span>拆解問題<br>定義規格</span></div>
+        <div class="delivery-step"><b>BUILD</b><span>AI 協作<br>整合實作</span></div>
+        <div class="delivery-step"><b>REVIEW</b><span>工程判斷<br>交叉檢查</span></div>
+        <div class="delivery-step"><b>VERIFY</b><span>測試驗收<br>正式交付</span></div>
+      </div>
+      <p class="delivery-loop">← FEEDBACK · KNOWLEDGE · ITERATION →</p>
     </div>
   </section>
 
   <section class="reveal" id="proof">
-    <p class="eyebrow">Proof</p>
-    <h2>量化成果</h2>
+    <p class="eyebrow">Selected Proof</p>
+    <h2>代表成果</h2>
     <div class="metrics">
       <div class="metric">
         <div class="num">12 年</div>
         <div class="label">後端與基礎設施工程</div>
-      </div>
-      <div class="metric">
-        <div class="num">2 次</div>
-        <div class="label">新創持股 CTO，其一公司成功售出</div>
       </div>
       <div class="metric">
         <div class="num">10 萬<em>/日</em></div>
@@ -432,54 +461,15 @@ gtag('config', 'G-GFW7V018T9');
       </div>
       <div class="metric">
         <div class="num">3h<em>→</em>10m</div>
-        <div class="label">教給 AI 的人工營運作業，壓縮 94% 工時（2026）</div>
-      </div>
-      <div class="metric">
-        <div class="num">2 年<em>+</em></div>
-        <div class="label">從零打造的平台低成本啟動、穩定營運中（2023–）</div>
+        <div class="label">AI 協作的人工營運流程，壓縮 94% 工時（2026）</div>
       </div>
     </div>
   </section>
-
-  <section class="reveal" id="ai-native">
-    <p class="eyebrow">Why AI-native</p>
-    <h2>為什麼是 AI-native</h2>
-    <p class="section-lede">AI 工具人人都在用。差別在兩件事：有沒有一套能穩定交付正式環境的協作系統，以及有沒有足夠的工程判斷把關它的輸出。</p>
-    <div class="cols3">
-      <div>
-        <h3><span class="tick">01</span>12 年工程判斷 × AI 槓桿</h3>
-        <p>AI 寫得快，對不對要有人看得出來。我看得出來，因為這些坑 12 年裡都踩過：架構決策、高併發交易、資料一致性。AI 放大的是資歷，不是取代它。</p>
-      </div>
-      <div>
-        <h3><span class="tick">02</span>Multi-agent 開發鏈，每日交付</h3>
-        <p>Claude 撰寫計畫 → Gemini／Codex 交叉整合 → Claude 實作 → review subagent 把關。AI 主導開發、本人只任 reviewer 的外部服務整合功能，已上線正式環境，工作流保持每日交付。</p>
-      </div>
-      <div>
-        <h3><span class="tick">03</span>把營運流程教給 AI</h3>
-        <p>一項人工營運作業原本要 3 小時，教給 AI 之後剩 10 分鐘；查帳流程也完整交接，每天自動比對兩邊資料庫的落差。交給 AI 之後我在做什麼？驗收它做得對不對、接住它做不了的例外，然後才有餘力去教下一個流程。教了 20 年的人，現在多教一個 AI。</p>
-      </div>
-      <div>
-        <h3><span class="tick">04</span>自建 harness，不只是用工具</h3>
-        <p>個人 LLM 知識庫管線、跨機 agent 記憶系統、Skill 沉澱，都是每天在用的第一手實作。模型會一直換，但拆流程、設驗收、迭代 harness 的方法留在我身上，換一個模型只是換一個學生。</p>
-      </div>
-      <div>
-        <h3><span class="tick">05</span>可複製到整個團隊</h3>
-        <p>工程文化我從零建過兩次：CI/CD、回顧會議、OKR、Event Storming。AI 工作流自己每天在跑。這兩件事加起來，就能把一個團隊帶進 AI-native，不只我自己快。</p>
-      </div>
-    </div>
-    <p class="closer-q">「把工作都教給 AI，那我的價值是什麼？」</p>
-    <p class="why-closer">工作一件一件教給 AI 之後，我做的還是同一件事：這個問題很煩，我來把它變簡單。我負責選什麼值得教、驗收有沒有教會、接住 AI 接不住的，為上線的結果負責，然後去面對下一個問題。</p>
-  </section>
-
-  <blockquote class="creed reveal">
-    <p>每個技術選型都先問：<br>「這解決的是<strong>現在的問題</strong>，<br>還是想像中的未來？」</p>
-    <div class="src">ENGINEERING CREED</div>
-  </blockquote>
 
   <section class="reveal" id="timeline">
     <p class="eyebrow">Track Record</p>
     <h2>經歷</h2>
-    <p class="arc">敘事弧線：工程師 → CTO → <em>AI-native 使能者</em></p>
+    <p class="arc">敘事弧線：工程師 → Engineering Leader → <em>System Builder</em></p>
     <ol class="timeline">
       <li class="now">
         <div class="when">2023 – 今</div>
@@ -529,6 +519,18 @@ gtag('config', 'G-GFW7V018T9');
         </div>
       </li>
     </ol>
+  </section>
+
+  <section class="reveal" id="systems">
+    <p class="eyebrow">Systems I Build</p>
+    <h2>我建構的系統</h2>
+    <p class="section-lede">AI 是現在最重要的 execution layer；核心能力仍是把人的判斷、團隊經驗與產品需求，轉化成可理解、可驗證、可持續運作的系統。</p>
+    <div class="systems-grid">
+      <article class="system-item"><span class="tick">01</span><h3>Product</h3><p>從使用者價值與商業目標出發，定義產品策略、路線圖與可驗證的交付節奏。</p></article>
+      <article class="system-item"><span class="tick">02</span><h3>Engineering</h3><p>設計可擴展、可觀測、可演進的架構，建立工程標準、自動化與品質機制。</p></article>
+      <article class="system-item"><span class="tick">03</span><h3>Team</h3><p>建立清楚的協作、決策與知識流動方式，讓團隊能力不只存在個人腦中。</p></article>
+      <article class="system-item"><span class="tick">04</span><h3>AI Execution</h3><p>把規格、review、驗證與知識沉澱整合進 multi-agent 工作流，穩定交付正式環境成果。</p></article>
+    </div>
   </section>
 
   <section class="reveal" id="skills">
@@ -592,94 +594,6 @@ gtag('config', 'G-GFW7V018T9');
     <p class="colophon">這一頁本身就是作品的一部分：由本人與 Claude 以 multi-agent 工作流協作設計與產出。</p>
   </footer>
 </div>
-
-<script>
-  document.documentElement.classList.add('js');
-
-  // 區段進場
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
-
-  // Hero：粒子自混沌收斂成網格（uncertainty → control）
-  (function () {
-    var c = document.getElementById('field');
-    var ctx = c.getContext('2d');
-    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var dots = [], dpr = 1;
-
-    function ease(p) { return 1 - Math.pow(1 - p, 3); }
-    function color() { return getComputedStyle(c).color; }
-
-    function build() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      var w = c.clientWidth, h = c.clientHeight;
-      c.width = w * dpr; c.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var gap = 26, mx = 14, my = 14;
-      var cols = Math.max(4, Math.floor((w - mx * 2) / gap));
-      var rows = Math.max(4, Math.floor((h - my * 2) / gap));
-      var ox = (w - (cols - 1) * gap) / 2, oy = (h - (rows - 1) * gap) / 2;
-      var targets = [];
-      for (var r = 0; r < rows; r++)
-        for (var q = 0; q < cols; q++)
-          targets.push({ tx: ox + q * gap, ty: oy + r * gap });
-      if (dots.length !== targets.length) {
-        dots = targets.map(function (t, i) {
-          return {
-            tx: t.tx, ty: t.ty,
-            sx: Math.random() * w, sy: Math.random() * h,
-            delay: (t.tx / w) * 700 + Math.random() * 500,
-            phase: Math.random() * Math.PI * 2
-          };
-        });
-      } else {
-        dots.forEach(function (d, i) { d.tx = targets[i].tx; d.ty = targets[i].ty; });
-      }
-    }
-
-    function draw(t) {
-      ctx.clearRect(0, 0, c.clientWidth, c.clientHeight);
-      ctx.fillStyle = color();
-      dots.forEach(function (d) {
-        var p = reduce ? 1 : Math.min(Math.max((t - d.delay) / 1400, 0), 1);
-        var e = ease(p);
-        var x = d.sx + (d.tx - d.sx) * e;
-        var y = d.sy + (d.ty - d.sy) * e;
-        if (p >= 1) {
-          x += Math.sin(t / 1600 + d.phase) * 1.1;
-          y += Math.cos(t / 1900 + d.phase) * 1.1;
-        }
-        ctx.beginPath();
-        ctx.arc(x, y, 1.6, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    }
-
-    build();
-    if (reduce) {
-      draw(0);
-      // 主題切換時重繪一次
-      new MutationObserver(function () { draw(0); })
-        .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-      matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { draw(0); });
-    } else {
-      var start = null;
-      (function frame(ts) {
-        if (start === null) start = ts;
-        var t = ts - start;
-        draw(t);
-        // ponytail: 收斂完成後降到 ~7fps 呼吸，閒置分頁不吃電
-        if (t < 2800) requestAnimationFrame(frame);
-        else setTimeout(function () { requestAnimationFrame(frame); }, 140);
-      })(0);
-    }
-    window.addEventListener('resize', build);
-  })();
-</script>
 
 </body>
 </html>
