@@ -11,10 +11,10 @@ gtag('js', new Date());
 gtag('config', 'G-GFW7V018T9');
 </script>
 <title>江豈鋒 Max Chiang</title>
-<meta name="description" content="江豈鋒 Max Chiang — 後端與基礎設施工程師、AI 協作工程實踐者。持續建構，把複雜的變成簡單的，把未知的變成掌握的。">
+<meta name="description" content="江豈鋒 Max Chiang — AI 時代的系統建構者。12 年把複雜的問題建構成可長期運作的系統，現在把工程判斷轉化成人與 AI 都能穩定執行的工作流。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="江豈鋒 Max Chiang">
-<meta property="og:description" content="江豈鋒 Max Chiang — 後端與基礎設施工程師、AI 協作工程實踐者。持續建構，把複雜的變成簡單的，把未知的變成掌握的。">
+<meta property="og:description" content="江豈鋒 Max Chiang — AI 時代的系統建構者。12 年把複雜的問題建構成可長期運作的系統，現在把工程判斷轉化成人與 AI 都能穩定執行的工作流。">
 <meta property="og:url" content="https://maxjkfc.github.io/">
 <meta property="og:locale" content="zh_TW">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎛️</text></svg>">
@@ -65,18 +65,18 @@ gtag('config', 'G-GFW7V018T9');
   }
   @media (max-width: 1100px) { .rail { display: none; } }
 
-  .wrap { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
 
   .top {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
     padding: 22px 0 0;
     font-family: var(--font-mono);
     font-size: 0.8rem;
   }
   .top .brand { color: var(--muted); letter-spacing: 0.08em; }
-  .top nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+  .top nav { display: flex; gap: 12px; }
   .top nav a {
     padding: 6px 14px;
     border: 1px solid var(--line);
@@ -84,94 +84,102 @@ gtag('config', 'G-GFW7V018T9');
   }
   .top nav a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 
-  main { padding: 88px 0 32px; }
-  @media (max-width: 640px) { main { padding: 56px 0 24px; } }
+  /* ── Hero：身分優先 ───────────────── */
+  .hero { padding: 104px 0 72px; }
+  @media (max-width: 640px) { .hero { padding: 64px 0 48px; } }
+  .hero .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 18px;
+  }
+  .hero .eyebrow b { color: var(--ink); font-weight: 600; }
+  h1.identity {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: clamp(2.6rem, 8vw, 4.6rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+  }
+  h1.identity em { font-style: normal; color: var(--accent); }
+  .hero .zh {
+    margin: 26px 0 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.75;
+    text-wrap: balance;
+  }
+  .hero .cta { display: flex; gap: 14px; margin-top: 40px; }
+  .hero .cta a {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    padding: 10px 20px;
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .hero .cta a.primary { border-color: var(--accent); background: var(--accent); color: var(--bg); font-weight: 600; }
+  .hero .cta a.primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); color: var(--bg); text-decoration: none; }
+  .hero .cta a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 
-  .eyebrow {
+  /* ── 區段 ───────────────── */
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  section h2 {
     font-family: var(--font-mono);
     font-size: 0.72rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
-    margin: 0 0 14px;
-  }
-  h1 {
-    margin: 0;
-    font-size: clamp(2.4rem, 7vw, 3.4rem);
-    font-weight: 700;
-    line-height: 1.15;
-  }
-  h1 .latin {
-    display: block;
-    font-size: 0.42em;
-    font-weight: 500;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    margin-top: 10px;
-    font-family: var(--font-mono);
-  }
-  .zh-creed {
-    margin: 30px 0 0;
-    font-size: 1.22rem;
     font-weight: 600;
-    line-height: 1.75;
+    margin: 0 0 22px;
+  }
+  .manifesto { margin: 0 0 12px; color: var(--muted); }
+  .manifesto b { color: var(--ink); font-weight: 600; }
+
+  section ul { margin: 18px 0 0; padding: 0; list-style: none; }
+  section li {
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    font-size: 0.94rem;
+    color: var(--muted);
+  }
+  section li b { color: var(--ink); font-weight: 600; }
+
+  /* ── Philosophy ───────────────── */
+  .philosophy { text-align: center; }
+  .ph-creed {
+    margin: 10px auto 0;
+    max-width: 22em;
+    font-size: clamp(1.35rem, 3.2vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.8;
     text-wrap: balance;
   }
-  .motto {
+  .ph-creed em { font-style: normal; color: var(--accent); }
+  .ph-note {
+    margin: 26px 0 0;
     font-family: var(--font-mono);
     font-size: 0.78rem;
-    color: var(--accent);
-    letter-spacing: 0.03em;
-    margin: 10px 0 0;
+    letter-spacing: 0.06em;
+    color: var(--muted);
   }
-  .bio { margin: 30px 0 0; color: var(--muted); }
-  .bio b { color: var(--ink); font-weight: 600; }
+
+  .seeking { margin: 0; font-size: 0.94rem; color: var(--muted); }
+
+  .links { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 8px; font-family: var(--font-mono); font-size: 0.82rem; }
   .tags {
-    margin: 20px 0 0;
+    margin: 22px 0 0;
     font-family: var(--font-mono);
     font-size: 0.78rem;
     color: var(--muted);
     letter-spacing: 0.04em;
   }
 
-  .now { margin-top: 56px; }
-  .now h2 {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    color: var(--accent);
-    font-weight: 600;
-    margin: 0 0 14px;
-  }
-  .now ul { margin: 0; padding: 0; list-style: none; }
-  .now li {
-    padding: 12px 0;
-    border-top: 1px dashed var(--line);
-    font-size: 0.94rem;
-    color: var(--muted);
-  }
-  .now li b { color: var(--ink); font-weight: 600; }
-
-  .links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 48px; align-items: center; }
-  .links a {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    padding: 9px 18px;
-    border: 1px solid var(--line);
-    color: var(--ink);
-  }
-  .links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
-  .links a.primary {
-    border-color: var(--accent);
-    background: var(--accent);
-    color: var(--bg);
-    font-weight: 600;
-  }
-  .links a.primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); color: var(--bg); }
-
   footer {
     border-top: 1px solid var(--line);
-    margin-top: 72px;
+    margin-top: 0;
     padding: 28px 0 56px;
     font-size: 0.8rem;
     color: var(--muted);
@@ -190,32 +198,54 @@ gtag('config', 'G-GFW7V018T9');
     </nav>
   </header>
 
-  <main>
-    <p class="eyebrow">Backend / Infra · AI-Native · Taichung, Taiwan</p>
-    <h1>江豈鋒<span class="latin">MAX CHIANG</span></h1>
-    <p class="zh-creed">持續建構，把複雜的變成簡單的，<br>把未知的變成掌握的。</p>
-    <p class="motto">Keep building. Simplify complexity. Turn uncertainty into control.</p>
-
-    <p class="bio">後端與基礎設施出身，12 年在資源受限下從零打造營運系統；當過兩次新創持股 CTO，現在帶著 4–6 人遠端小隊為業主營運大型線上服務。2026 年起把這套經驗轉向 AI 協作開發，與 AI 一起寫系統是每天的日常，不是口號。</p>
-
-    <section class="now">
-      <h2>Now</h2>
-      <ul>
-        <li><b>Freelancer 技術負責人</b>——高併發線上服務的架構與營運（Go 微服務＋Kubernetes），穩定營運 2 年+。</li>
-        <li><b>AI 協作工程</b>——multi-agent 開發鏈、harness 與個人知識系統的第一手實作。</li>
-        <li><b>AI 對話應用 side project</b>——讓 AI 回應更像真人，0.2 beta；產品公開前暫以匿名呈現。</li>
-      </ul>
-    </section>
-
-    <div class="links">
+  <section class="hero" style="border-top:none">
+    <p class="eyebrow"><b>江豈鋒 Max Chiang</b> · Taichung, Taiwan</p>
+    <h1 class="identity">AI-native<br><em>System Builder</em></h1>
+    <p class="zh">把複雜的東西，<br>建構成可以長期運作的系統。</p>
+    <div class="cta">
       <a class="primary" href="/resume/">閱讀完整履歷 →</a>
       <a href="mailto:maxjkfc@gmail.com">Email</a>
-      <a href="https://github.com/maxjkfc">GitHub</a>
-      <a href="https://www.linkedin.com/in/maxjkfc/">LinkedIn</a>
     </div>
+  </section>
 
+  <section>
+    <h2>I Build Systems</h2>
+    <p class="manifesto">我不是追逐新技術的人。12 年來做的其實是同一件事：把複雜的問題拆解，建構成可以長期運作的系統——以前用在產品、技術架構、團隊制度與公司營運，現在用在 AI 協作工作流。當過兩次新創持股 CTO、其一公司售出，但那是經歷，不是身分；<b>身分一直都是建構的人</b>。</p>
+    <ul>
+      <li><b>高併發交易系統</b>——3 個月從零上線，日均 5 萬單、峰值 10 萬（2016–18）。</li>
+      <li><b>交易平台＋工程文化</b>——35 人公司的架構與制度從零建立，2023 年公司售出（2021–23）。</li>
+      <li><b>大型線上服務</b>——低成本啟動、穩定營運 2 年+，帶 4–6 人遠端小隊維運（2023–）。</li>
+      <li><b>AI 協作工作流</b>——multi-agent 開發鏈＋知識庫＋跨機 agent 記憶，每日交付正式環境（2026–）。</li>
+      <li><b>AI 對話應用</b>——讓 AI 回應更像真人，0.2 beta；產品公開前暫以匿名呈現（2026–）。</li>
+    </ul>
+  </section>
+
+  <section class="philosophy">
+    <h2>Philosophy</h2>
+    <p class="ph-creed">持續建構，<br>把複雜的變成<em>簡單的</em>，<br>把未知的變成<em>掌握的</em>。</p>
+    <p class="ph-note">好的系統應該：被理解、被驗證、被複製、被長期維運。</p>
+  </section>
+
+  <section>
+    <h2>Today · AI 是團隊，不是工具</h2>
+    <p class="manifesto">2026 年起，我把 12 年的工程判斷，轉化成人與 AI 都能穩定執行的系統。</p>
+    <ul>
+      <li><b>Multi-agent 開發鏈</b>——Claude 撰寫計畫、Gemini／Codex 交叉整合、review subagent 把關，每日交付正式環境。</li>
+      <li><b>把判斷寫進系統</b>——規格拆解、review 流程、驗收機制、知識庫，做成 AI 能執行的形狀。</li>
+      <li><b>驗收與責任</b>——AI 做得快，對不對我看得出來；上線的結果，我負責。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Open To</h2>
+    <p class="seeking">AI-native 技術負責人／資深後端職位，或 AI 轉型顧問合作，台中或遠端。如果你需要一個把混亂變成系統的人，<a href="mailto:maxjkfc@gmail.com">聊聊</a>。</p>
+    <div class="links">
+      <a href="mailto:maxjkfc@gmail.com">maxjkfc@gmail.com</a>
+      <a href="https://github.com/maxjkfc">github.com/maxjkfc</a>
+      <a href="https://www.linkedin.com/in/maxjkfc/">linkedin.com/in/maxjkfc</a>
+    </div>
     <p class="tags">#AI協作工程 · #持續建構 · #從零到一</p>
-  </main>
+  </section>
 
   <footer>這個站由本人與 Claude 以 multi-agent 工作流協作設計與產出。</footer>
 </div>
