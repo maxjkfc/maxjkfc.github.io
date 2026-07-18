@@ -113,14 +113,20 @@ gtag('config', 'G-GFW7V018T9');
   .top {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     padding: 22px 0 0;
     font-family: var(--font-mono);
     font-size: 0.8rem;
   }
   .top .brand { color: var(--muted); letter-spacing: 0.08em; text-decoration: none; }
   .top .brand:hover { color: var(--accent); }
-  .top nav { display: flex; gap: 20px; }
+  .top nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+  .top nav a {
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .top nav a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 
   /* ── Hero ───────────────── */
   .hero {
@@ -252,6 +258,18 @@ gtag('config', 'G-GFW7V018T9');
   .cols3 p { margin: 0; font-size: 0.92rem; color: var(--muted); }
   .cols3 h3 { display: flex; align-items: baseline; gap: 10px; }
   .cols3 h3 .tick { font-family: var(--font-mono); color: var(--accent); font-size: 0.85rem; }
+  .closer-q {
+    margin: 56px 0 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .why-closer {
+    margin: 16px 0 0;
+    max-width: 42em;
+    font-size: 1rem;
+    line-height: 1.95;
+    color: var(--ink);
+  }
 
   /* ── 信條 ───────────────── */
   .creed {
@@ -430,25 +448,27 @@ gtag('config', 'G-GFW7V018T9');
     <div class="cols3">
       <div>
         <h3><span class="tick">01</span>12 年工程判斷 × AI 槓桿</h3>
-        <p>AI 放大的是既有的資歷：架構決策、高併發 domain、production 直覺。AI 產出得快，對錯由 12 年 production 經驗判斷——這個組合沒有捷徑。</p>
+        <p>AI 寫得快，對不對要有人看得出來。我看得出來，因為這些坑 12 年裡都踩過：架構決策、高併發交易、資料一致性。AI 放大的是資歷，不是取代它。</p>
       </div>
       <div>
         <h3><span class="tick">02</span>Multi-agent 開發鏈，每日交付</h3>
-        <p>Claude 撰寫計畫 → Gemini 交叉審查 → Claude 實作 → review subagent 把關。AI 主導開發、本人只任 reviewer 的外部服務整合功能，已上線正式環境，工作流保持每日交付。</p>
+        <p>Claude 撰寫計畫 → Gemini／Codex 交叉整合 → Claude 實作 → review subagent 把關。AI 主導開發、本人只任 reviewer 的外部服務整合功能，已上線正式環境，工作流保持每日交付。</p>
       </div>
       <div>
         <h3><span class="tick">03</span>把營運流程教給 AI</h3>
-        <p>一項人工營運作業由 3 小時壓縮到 10 分鐘（−94%）；查帳流程完整交接給 AI，每日自動比對雙資料庫落差。把自己會的變成別人能用的形狀，教了 20 年的人，現在教 AI。</p>
+        <p>一項人工營運作業原本要 3 小時，教給 AI 之後剩 10 分鐘；查帳流程也完整交接，每天自動比對兩邊資料庫的落差。交給 AI 之後我在做什麼？驗收它做得對不對、接住它做不了的例外，然後才有餘力去教下一個流程。教了 20 年的人，現在多教一個 AI。</p>
       </div>
       <div>
         <h3><span class="tick">04</span>自建 harness，不只是用工具</h3>
-        <p>個人 LLM 知識庫管線、跨機 agent 記憶系統、Skill 沉澱；約束、驗證、修正的協作系統是每天的第一手實作，不是二手知識。用工具的人換個模型就歸零，建系統的人越用越快。</p>
+        <p>個人 LLM 知識庫管線、跨機 agent 記憶系統、Skill 沉澱，都是每天在用的第一手實作。模型會一直換，但拆流程、設驗收、迭代 harness 的方法留在我身上，換一個模型只是換一個學生。</p>
       </div>
       <div>
         <h3><span class="tick">05</span>可複製到整個團隊</h3>
-        <p>兩次從零建立工程文化（CI/CD、回顧會議、OKR、Event Storming）＋一套已跑順的 AI 工作流：不只自己快，具備把團隊帶進 AI-native 的完整配方。</p>
+        <p>工程文化我從零建過兩次：CI/CD、回顧會議、OKR、Event Storming。AI 工作流自己每天在跑。這兩件事加起來，就能把一個團隊帶進 AI-native，不只我自己快。</p>
       </div>
     </div>
+    <p class="closer-q">「把工作都教給 AI，那我的價值是什麼？」</p>
+    <p class="why-closer">工作一件一件教給 AI 之後，我做的還是同一件事：這個問題很煩，我來把它變簡單。我負責選什麼值得教、驗收有沒有教會、接住 AI 接不住的，為上線的結果負責，然後去面對下一個問題。</p>
   </section>
 
   <blockquote class="creed reveal">
