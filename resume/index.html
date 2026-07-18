@@ -113,14 +113,20 @@ gtag('config', 'G-GFW7V018T9');
   .top {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     padding: 22px 0 0;
     font-family: var(--font-mono);
     font-size: 0.8rem;
   }
   .top .brand { color: var(--muted); letter-spacing: 0.08em; text-decoration: none; }
   .top .brand:hover { color: var(--accent); }
-  .top nav { display: flex; gap: 20px; }
+  .top nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+  .top nav a {
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .top nav a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 
   /* ── Hero ───────────────── */
   .hero {
