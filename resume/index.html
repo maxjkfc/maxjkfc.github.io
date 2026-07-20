@@ -245,15 +245,16 @@ gtag('config', 'G-GFW7V018T9');
   /* ── 數字 ───────────────── */
   .metrics {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 36px 28px;
+    grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
+    gap: 40px 48px;
   }
   .metric .num {
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: 600;
-    line-height: 1.2;
+    line-height: 1.35;
+    text-wrap: balance;
   }
   .metric .num em { font-style: normal; color: var(--accent); }
   .metric .label { margin-top: 6px; font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
@@ -436,28 +437,28 @@ gtag('config', 'G-GFW7V018T9');
     <h2>量化成果</h2>
     <div class="metrics">
       <div class="metric">
-        <div class="num">12 年</div>
-        <div class="label">工程與系統建構經驗</div>
+        <div class="num">0 <em>→</em> 5 萬單/日</div>
+        <div class="label">高併發交易系統 3 個月從零上線，峰值 10 萬單（2016–18）</div>
       </div>
       <div class="metric">
-        <div class="num">2 次</div>
-        <div class="label">新創持股 CTO，其一公司 2023 年售出</div>
+        <div class="num">12 <em>→</em> 20 人</div>
+        <div class="label">技術團隊擴編；同期以自動化將維運成本降低 80%（2016–18）</div>
       </div>
       <div class="metric">
-        <div class="num">10 萬<em>/日</em></div>
-        <div class="label">高併發交易系統峰值單量，日均 5 萬（2016–18）</div>
+        <div class="num">0 <em>→</em> 12 項專案</div>
+        <div class="label">6 人新創從零起步，2019 年營收 800 萬（2018–21）</div>
       </div>
       <div class="metric">
-        <div class="num">80<em>%</em></div>
-        <div class="label">自動化讓維運成本下降的幅度（2016–18）</div>
+        <div class="num">0 <em>→</em> 工程與營運體系</div>
+        <div class="label">35 人公司的 CI/CD、監控、數據儀表板與 OKR 制度從零建立；2023 年售出（2021–23）</div>
       </div>
       <div class="metric">
-        <div class="num">3h<em>→</em>10m</div>
-        <div class="label">教給 AI 的人工營運作業，壓縮 94% 工時（2026）</div>
+        <div class="num">3 小時 <em>→</em> 10 分鐘</div>
+        <div class="label">人工營運作業教給 AI 之後的單次工時（2026）</div>
       </div>
       <div class="metric">
-        <div class="num">2 年<em>+</em></div>
-        <div class="label">從零打造的平台低成本啟動、穩定營運中（2023–）</div>
+        <div class="num">手動 <em>→</em> 每日自動</div>
+        <div class="label">查帳流程交接給 AI，每天自動比對雙資料庫落差（2026）</div>
       </div>
     </div>
   </section>
@@ -557,28 +558,28 @@ gtag('config', 'G-GFW7V018T9');
     <h2>核心能力</h2>
     <div class="skills">
       <div>
-        <h3>BACKEND</h3>
-        <p>Go 微服務全鏈路：gRPC + grpc-gateway、WebSocket、NATS / RabbitMQ；DDD / CQRS / Event Driven；高併發交易與資料一致性（對帳追差、補單重算、原子性更新重構）。</p>
+        <h3>BACKEND &amp; DATA</h3>
+        <p>Go 微服務全鏈路：gRPC + grpc-gateway、WebSocket、NATS / RabbitMQ；DDD / CQRS / Event Driven；高併發交易與資料一致性（對帳追差、補單重算、原子性更新重構）。MongoDB、CockroachDB、MySQL、Redis。PHP / C / Rust 可讀可改，跨語言接手不陌生。</p>
       </div>
       <div>
-        <h3>INFRA</h3>
-        <p>Kubernetes（GKE）、GCP、阿里雲；Docker Swarm→K8s 兩代容器編排；三代 CI/CD（Jenkins→GitHub Actions）自建經驗；Prometheus + Slack bot 監控告警。</p>
-      </div>
-      <div>
-        <h3>DATABASE</h3>
-        <p>MongoDB（replica set on GKE）、CockroachDB、MySQL、Redis。</p>
+        <h3>INFRA &amp; DELIVERY</h3>
+        <p>Kubernetes（GKE）、GCP、阿里雲；Docker Swarm→K8s 兩代容器編排；三代 CI/CD（Jenkins→GitHub Actions）自建經驗；Prometheus + Slack bot 監控告警與線上事故處理。</p>
       </div>
       <div>
         <h3>AI COLLABORATION</h3>
         <p>Multi-agent 開發鏈設計、Harness / Context Engineering、subagent 編排、Skill 沉澱、跨機 agent 記憶系統——2026 年起每天的第一手實作。</p>
       </div>
       <div>
-        <h3>BUSINESS</h3>
-        <p>商業思維學院系統訓練；營收、留存與營運指標直接作為工程決策輸入；兩次創業的失敗代價已轉化為可言說的判斷準則。</p>
+        <h3>TEAM &amp; CULTURE</h3>
+        <p>帶過三種尺度的團隊：12→20 人技術團隊、35 人公司、4–6 人遠端小隊（非同步協作、營運超過兩年）。OKR、回顧會議、Event Storming、教育訓練與閃電秀，兩次從零導入而不是繼承。</p>
       </div>
       <div>
-        <h3>LANGUAGES</h3>
-        <p>Go / Python / Shell 主力；PHP / C / Rust 可讀可改，跨語言接手專案不陌生。</p>
+        <h3>TEACHING &amp; ENABLEMENT</h3>
+        <p>從社團教學長、競賽培訓教練與教學助理，到公司內訓、閃電秀與英文讀書會講者；現在把營運流程教給 AI，用的是同一套方法：拆解、示範、驗收。</p>
+      </div>
+      <div>
+        <h3>BUSINESS</h3>
+        <p>商業思維學院系統訓練；營收、留存與營運指標直接作為工程決策輸入；兩次創業的失敗代價已轉化為可言說的判斷準則。</p>
       </div>
     </div>
   </section>
