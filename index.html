@@ -78,7 +78,10 @@ gtag('config', 'G-GFW7V018T9');
   .top .brand { color: var(--muted); letter-spacing: 0.08em; }
   .top nav { display: flex; gap: 12px; }
   .top nav a {
-    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 6px 16px;
     border: 1px solid var(--line);
     color: var(--ink);
   }
@@ -89,7 +92,7 @@ gtag('config', 'G-GFW7V018T9');
   @media (max-width: 640px) { .hero { padding: 64px 0 48px; } }
   .hero .eyebrow {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.82rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--muted);
@@ -128,7 +131,7 @@ gtag('config', 'G-GFW7V018T9');
   section { padding: 56px 0; border-top: 1px solid var(--line); }
   section h2 {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -191,7 +194,7 @@ gtag('config', 'G-GFW7V018T9');
 <div class="wrap">
   <header class="top">
     <span class="brand">maxjkfc</span>
-    <nav>
+    <nav aria-label="主要連結">
       <a href="/resume/">Resume</a>
       <a href="https://github.com/maxjkfc">GitHub</a>
       <a href="https://www.linkedin.com/in/maxjkfc/">LinkedIn</a>
@@ -215,7 +218,7 @@ gtag('config', 'G-GFW7V018T9');
       <li><b>高併發交易系統</b>——3 個月從零上線，日均 5 萬單、峰值 10 萬（2016–18）。</li>
       <li><b>交易平台＋工程文化</b>——35 人公司的架構與制度從零建立，2023 年公司售出（2021–23）。</li>
       <li><b>大型線上服務</b>——低成本啟動，自 2023 年上線營運迄今，帶 4–6 人遠端小隊維運。</li>
-      <li><b>AI 協作工作流</b>——multi-agent 開發鏈＋知識庫＋跨機 agent 記憶，每日交付正式環境（2026–）。</li>
+      <li><b>AI 協作工作流</b>——multi-agent 開發鏈＋知識庫＋跨機 agent 記憶，持續交付正式環境（2026–）。</li>
       <li><b>AI 對話應用</b>——讓 AI 回應更像真人，0.2 beta；產品公開前暫以匿名呈現（2026–）。</li>
     </ul>
   </section>
@@ -230,7 +233,7 @@ gtag('config', 'G-GFW7V018T9');
     <h2>Today · AI 是團隊，不是工具</h2>
     <p class="manifesto">2026 年起，我把 12 年的工程判斷，轉化成人與 AI 都能穩定執行的系統。</p>
     <ul>
-      <li><b>Multi-agent 開發鏈</b>——Claude 撰寫計畫、Gemini／Codex 交叉整合、review subagent 把關，每日交付正式環境。</li>
+      <li><b>Multi-agent 開發鏈</b>——把規格、實作、review 與驗證串成一條鏈，持續交付正式環境。</li>
       <li><b>把判斷寫進系統</b>——規格拆解、review 流程、驗收機制、知識庫，做成 AI 能執行的形狀。</li>
       <li><b>驗收與責任</b>——AI 做得快，對不對我看得出來；上線的結果，我負責。</li>
     </ul>

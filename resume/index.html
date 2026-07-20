@@ -87,7 +87,7 @@ gtag('config', 'G-GFW7V018T9');
   .mono { font-family: var(--font-mono); }
   .eyebrow {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -122,7 +122,10 @@ gtag('config', 'G-GFW7V018T9');
   .top .brand:hover { color: var(--accent); }
   .top nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
   .top nav a {
-    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 6px 16px;
     border: 1px solid var(--line);
     color: var(--ink);
   }
@@ -203,7 +206,7 @@ gtag('config', 'G-GFW7V018T9');
   @media (max-width: 860px) { #field { height: 200px; } }
   .field-cap {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.78rem;
     letter-spacing: 0.14em;
     color: var(--muted);
     text-align: right;
@@ -287,7 +290,7 @@ gtag('config', 'G-GFW7V018T9');
     text-wrap: balance;
   }
   .creed p strong { color: var(--accent); font-weight: 600; }
-  .creed .src { margin-top: 16px; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.18em; color: var(--muted); }
+  .creed .src { margin-top: 16px; font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.18em; color: var(--muted); }
 
   /* ── 經歷 ───────────────── */
   .arc {
@@ -323,7 +326,7 @@ gtag('config', 'G-GFW7V018T9');
   .chips span {
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     padding: 3px 10px;
     border: 1px solid var(--line);
     color: var(--muted);
@@ -385,7 +388,7 @@ gtag('config', 'G-GFW7V018T9');
 <div class="wrap">
   <header class="top">
     <a class="brand" href="/">maxjkfc</a>
-    <nav>
+    <nav aria-label="主要連結">
       <a href="https://github.com/maxjkfc">GitHub</a>
       <a href="https://www.linkedin.com/in/maxjkfc/">LinkedIn</a>
       <a href="mailto:maxjkfc@gmail.com">Email</a>
@@ -451,12 +454,12 @@ gtag('config', 'G-GFW7V018T9');
         <p>AI 寫得快，對不對要有人看得出來。我看得出來，因為這些坑 12 年裡都踩過：架構決策、高併發交易、資料一致性。AI 放大的是資歷，不是取代它。</p>
       </div>
       <div>
-        <h3><span class="tick">02</span>Multi-agent 開發鏈，每日交付</h3>
-        <p>Claude 撰寫計畫 → Gemini／Codex 交叉整合 → Claude 實作 → review subagent 把關。AI 主導開發、本人只任 reviewer 的外部服務整合功能，已上線正式環境，工作流保持每日交付。</p>
+        <h3><span class="tick">02</span>Multi-agent 開發鏈，持續交付</h3>
+        <p>把規格、實作、review 與驗證串成 multi-agent 開發鏈（目前是 Claude 撰寫計畫、Gemini／Codex 交叉整合、review subagent 把關）。AI 主導開發、本人只任 reviewer 的功能已上線正式環境，並持續交付。</p>
       </div>
       <div>
         <h3><span class="tick">03</span>把營運流程教給 AI</h3>
-        <p>一項人工營運作業原本要 3 小時，教給 AI 之後剩 10 分鐘；查帳流程也完整交接，每天自動比對兩邊資料庫的落差。交給 AI 之後我在做什麼？驗收它做得對不對、接住它做不了的例外，然後才有餘力去教下一個流程。教了 20 年的人，現在多教一個 AI。</p>
+        <p>一項人工營運作業原本要 3 小時，教給 AI 之後剩 10 分鐘；查帳流程也完整交接，每天自動比對兩邊資料庫的落差。教了 20 年的人，現在多教一個 AI。</p>
       </div>
       <div>
         <h3><span class="tick">04</span>把工程判斷轉化成系統</h3>
@@ -485,7 +488,7 @@ gtag('config', 'G-GFW7V018T9');
         <div class="when">2023 – 今</div>
         <div>
           <h3>Freelancer 技術負責人 <span>｜帶 4–6 人遠端小隊</span></h3>
-          <p>為業主從零打造大型線上服務（Go 微服務＋DDD），低成本啟動、自 2023 年上線營運至今。對帳追差、補單重算、原子性更新重構；介接多家外部服務提供者；高價值資產的保管與出入帳流程設計；深夜攻擊事件一人完成偵測到 GCP 防火牆封鎖。</p>
+          <p>為業主從零打造大型線上服務（Go 微服務＋DDD），低成本啟動、自 2023 年上線營運至今。對帳追差、補單重算、原子性更新重構；介接多家外部服務提供者；金鑰保管與權限分離的安全設計；深夜攻擊事件一人完成偵測到 GCP 防火牆封鎖。</p>
           <div class="chips"><span>Go</span><span>DDD</span><span>GKE</span><span>2023 上線迄今</span><span>追回約 7 萬差額</span></div>
         </div>
       </li>
