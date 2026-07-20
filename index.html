@@ -17,6 +17,10 @@ gtag('config', 'G-GFW7V018T9');
 <meta property="og:description" content="江豈鋒 Max Chiang — AI 時代的系統建構者。12 年把複雜的問題建構成可長期運作的系統，現在把工程判斷轉化成人與 AI 都能穩定執行的工作流。">
 <meta property="og:url" content="https://maxjkfc.github.io/">
 <meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="江豈鋒 Max Chiang">
+<meta name="twitter:description" content="江豈鋒 Max Chiang — AI 時代的系統建構者。12 年把複雜的問題建構成可長期運作的系統，現在把工程判斷轉化成人與 AI 都能穩定執行的工作流。">
+<link rel="canonical" href="https://maxjkfc.github.io/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎛️</text></svg>">
 </head>
 <body>
@@ -75,7 +79,13 @@ gtag('config', 'G-GFW7V018T9');
     font-family: var(--font-mono);
     font-size: 0.8rem;
   }
-  .top .brand { color: var(--muted); letter-spacing: 0.08em; }
+  .top .brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
   .top nav { display: flex; gap: 12px; }
   .top nav a {
     display: inline-flex;
@@ -171,7 +181,8 @@ gtag('config', 'G-GFW7V018T9');
 
   .seeking { margin: 0; font-size: 0.94rem; color: var(--muted); }
 
-  .links { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 8px; font-family: var(--font-mono); font-size: 0.82rem; }
+  .links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 24px; margin-top: 8px; font-family: var(--font-mono); font-size: 0.82rem; }
+  .links a { display: inline-flex; align-items: center; min-height: 44px; }
   .tags {
     margin: 22px 0 0;
     font-family: var(--font-mono);
