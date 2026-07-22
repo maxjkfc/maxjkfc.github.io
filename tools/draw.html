@@ -95,6 +95,12 @@ let sel = null;          // 選取中的節點 id
 
 const node = id => g.nodes.find(n => n.id === id);
 
+// 四邊各一個連線點
+const halfH = n => n.shape === 'diamond' ? H * 0.8 : H / 2;
+const handles = n => [
+  { x: 0, y: -halfH(n) }, { x: W / 2, y: 0 }, { x: 0, y: halfH(n) }, { x: -W / 2, y: 0 },
+];
+
 function shapeEl(n) {
   if (n.shape === 'diamond') {
     const p = [[0, -H * 0.8], [W / 2, 0], [0, H * 0.8], [-W / 2, 0]].map(a => a.join(',')).join(' ');
@@ -106,7 +112,7 @@ function shapeEl(n) {
 // 線段端點：從中心往目標方向退到節點邊界（用外接矩形近似，菱形也堪用）
 function anchor(from, to) {
   const dx = to.x - from.x, dy = to.y - from.y;
-  const hw = W / 2 + 4, hh = (from.shape === 'diamond' ? H * 0.8 : H / 2) + 4;
+  const hw = W / 2 + 4, hh = halfH(from) + 4;
   const t = Math.min(dx ? hw / Math.abs(dx) : Infinity, dy ? hh / Math.abs(dy) : Infinity);
   return t === Infinity ? from : { x: from.x + dx * t, y: from.y + dy * t };
 }
@@ -115,7 +121,7 @@ function draw() {
   gNodes.innerHTML = g.nodes.map(n => `
     <g class="node${n.id === sel ? ' sel' : ''}" data-id="${n.id}" transform="translate(${n.x},${n.y})">
       ${shapeEl(n)}<text>${esc(n.text)}</text>
-      <circle class="handle" r="6" cx="${g.dir === 'LR' ? W / 2 : 0}" cy="${g.dir === 'LR' ? 0 : (n.shape === 'diamond' ? H * 0.8 : H / 2)}"></circle>
+      ${handles(n).map(h => `<circle class="handle" r="6" cx="${h.x}" cy="${h.y}"></circle>`).join('')}
     </g>`).join('');
   gEdges.innerHTML = g.edges.map((e, i) => {
     const a = node(e.from), b = node(e.to);
