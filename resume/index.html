@@ -34,6 +34,7 @@ gtag('config', 'G-GFW7V018T9');
     --accent: #A2571F;
     --accent-strong: #8A4717;
     --dot: rgba(162, 87, 31, 0.55);
+    --soft: #E7ECF1;
     --font-sans: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, sans-serif;
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   }
@@ -47,6 +48,7 @@ gtag('config', 'G-GFW7V018T9');
       --accent: #D6905A;
       --accent-strong: #E3A876;
       --dot: rgba(214, 144, 90, 0.5);
+      --soft: #1F262E;
     }
   }
   :root[data-theme="dark"] {
@@ -58,6 +60,7 @@ gtag('config', 'G-GFW7V018T9');
     --accent: #D6905A;
     --accent-strong: #E3A876;
     --dot: rgba(214, 144, 90, 0.5);
+    --soft: #1F262E;
   }
   :root[data-theme="light"] {
     --bg: #F3F5F7;
@@ -68,6 +71,7 @@ gtag('config', 'G-GFW7V018T9');
     --accent: #A2571F;
     --accent-strong: #8A4717;
     --dot: rgba(162, 87, 31, 0.55);
+    --soft: #E7ECF1;
   }
 
   * { box-sizing: border-box; }
@@ -139,9 +143,11 @@ gtag('config', 'G-GFW7V018T9');
     min-height: 44px;
     padding: 6px 16px;
     border: 1px solid var(--line);
+    border-radius: 999px;
     color: var(--ink);
+    transition: background .15s, border-color .15s, color .15s;
   }
-  .top nav a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .top nav a:hover { border-color: var(--accent); background: var(--soft); color: var(--accent); text-decoration: none; }
 
   /* ── Hero ───────────────── */
   .hero {
@@ -205,9 +211,11 @@ gtag('config', 'G-GFW7V018T9');
     font-size: 0.8rem;
     padding: 8px 16px;
     border: 1px solid var(--line);
+    border-radius: 999px;
     color: var(--ink);
+    transition: background .15s, border-color .15s, color .15s;
   }
-  .hero-links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .hero-links a:hover { border-color: var(--accent); background: var(--soft); color: var(--accent); text-decoration: none; }
 
   #field {
     width: 100%;
@@ -342,6 +350,7 @@ gtag('config', 'G-GFW7V018T9');
     font-size: 0.78rem;
     padding: 3px 10px;
     border: 1px solid var(--line);
+    border-radius: 999px;
     color: var(--muted);
     white-space: nowrap;
   }
