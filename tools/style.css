@@ -42,7 +42,15 @@ aside.rail {
 aside.rail nav { display: contents; }
 aside.rail a { display: block; padding: 6px 10px; border-radius: 6px; font-size: 14px; color: var(--ink); }
 aside.rail a:hover { background: var(--bg); color: var(--accent); text-decoration: none; }
-aside.rail .brand { font-weight: 600; margin-bottom: 10px; }
+aside.rail .head { display: flex; align-items: center; margin-bottom: 10px; }
+aside.rail .brand { font-weight: 600; flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; }
+aside.rail .toggle { padding: 2px 7px; background: transparent; border-color: transparent; color: var(--muted); }
+aside.rail .toggle:hover { border-color: var(--line); }
+
+body.rail-collapsed aside.rail { flex-basis: 46px; padding: 14px 6px; }
+body.rail-collapsed aside.rail .brand,
+body.rail-collapsed aside.rail nav,
+body.rail-collapsed aside.rail .home { display: none; }
 aside.rail .active { background: var(--bg); color: var(--accent); font-weight: 600; }
 aside.rail .home { margin-top: auto; color: var(--muted); font-size: 13px; }
 @media (max-width: 720px) {
@@ -52,7 +60,14 @@ aside.rail .home { margin-top: auto; color: var(--muted); font-size: 13px; }
     overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line);
   }
   aside.rail a { white-space: nowrap; padding: 4px 8px; }
+  aside.rail .head { display: contents; }
+  aside.rail .toggle { display: none; }
   aside.rail .home { margin-top: 0; margin-left: auto; }
+  /* 窄版是頂部橫列，沒有收合的必要 */
+  body.rail-collapsed aside.rail { flex-basis: auto; padding: 8px 12px; }
+  body.rail-collapsed aside.rail .brand,
+  body.rail-collapsed aside.rail .home { display: block; }
+  body.rail-collapsed aside.rail nav { display: contents; }
 }
 
 header.bar {

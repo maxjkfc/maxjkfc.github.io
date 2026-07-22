@@ -7,12 +7,26 @@ const here = location.pathname.split('/').pop() || 'index.html';
 const rail = document.createElement('aside');
 rail.className = 'rail';
 rail.innerHTML = `
-  <a class="brand" href="./">🧰 Dev Tools</a>
+  <div class="head">
+    <a class="brand" href="./">🧰 Dev Tools</a>
+    <button class="toggle" title="收合側邊欄" aria-label="收合側邊欄">«</button>
+  </div>
   <nav>${TOOLS.map(t =>
-    `<a href="./${t.href}"${t.href === here ? ' class="active" aria-current="page"' : ''}>${t.name}</a>`
+    `<a href="./${t.href}"${t.href === here ? ' class="active" aria-current="page"' : ''} title="${t.name}">${t.name}</a>`
   ).join('')}</nav>
   <a class="home" href="../">← 回首頁</a>`;
 document.body.insertBefore(rail, document.body.firstChild);
+
+const toggle = rail.querySelector('.toggle');
+function setCollapsed(on) {
+  document.body.classList.toggle('rail-collapsed', on);
+  toggle.textContent = on ? '»' : '«';
+  toggle.title = toggle.ariaLabel = on ? '展開側邊欄' : '收合側邊欄';
+  localStorage.setItem('tools.rail', on ? '1' : '0');
+  dispatchEvent(new Event('resize')); // 讓工具重新量寬度（例如 Mermaid 的自動縮放）
+}
+setCollapsed(localStorage.getItem('tools.rail') === '1');
+toggle.addEventListener('click', () => setCollapsed(!document.body.classList.contains('rail-collapsed')));
 
 const list = document.getElementById('tool-list');
 if (list) list.innerHTML = TOOLS.map(t =>
