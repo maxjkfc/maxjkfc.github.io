@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>流程圖繪製 → Mermaid — Dev Tools</title>
+<meta name="description" content="用拖拉的方式畫流程圖，直接產生 Mermaid 語法與 Markdown 區塊。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✏️</text></svg>">
+<link rel="stylesheet" href="./style.css">
+<style>
+  html, body { height: 100%; }
+  #shell { height: 100%; }
+  main { flex: 1; display: grid; grid-template-columns: 1fr minmax(260px, 34%); min-height: 0; }
+  #canvas { width: 100%; height: 100%; background: var(--panel); border-right: 1px solid var(--line); touch-action: none; }
+  #canvas #arrow path { fill: var(--muted); }
+  #canvas .node { cursor: move; }
+  #canvas .node .box { fill: var(--bg); stroke: var(--line); stroke-width: 1.5; }
+  #canvas .node.sel .box { stroke: var(--accent); stroke-width: 2.5; }
+  #canvas .node text { fill: var(--ink); font-size: 14px; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
+  #canvas .handle { fill: var(--accent); opacity: 0; cursor: crosshair; transition: opacity .12s; }
+  #canvas .node:hover .handle, #canvas .node.sel .handle { opacity: 1; }
+  #canvas .del { opacity: 0; cursor: pointer; transition: opacity .12s; }
+  #canvas .del circle { fill: var(--danger); }
+  #canvas .del text { fill: var(--panel); font-size: 11px; font-weight: 700; }
+  #canvas .node:hover .del, #canvas .node.sel .del, #canvas g[data-edge]:hover .del { opacity: 1; }
+  #canvas .temp { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 5 4; fill: none; pointer-events: none; }
+  #canvas .node.target .box { stroke: var(--accent); stroke-width: 2.5; }
+  #canvas .edge { stroke: var(--muted); stroke-width: 1.5; fill: none; cursor: pointer; }
+  #canvas .edge-hit { stroke: transparent; stroke-width: 14; fill: none; cursor: pointer; }
+  #canvas .edge-label { fill: var(--muted); font-size: 12px; text-anchor: middle; pointer-events: none; }
+  #side { display: flex; flex-direction: column; min-width: 0; }
+  #out { flex: 1; margin: 0; padding: 14px; overflow: auto; font-family: var(--font-mono);
+         font-size: 12.5px; line-height: 1.6; white-space: pre; color: var(--ink); }
+  #side .acts { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 14px; border-top: 1px solid var(--line); }
+  .hint { padding: 8px 14px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
+  @media (max-width: 720px) {
+    main { grid-template-columns: 1fr; grid-template-rows: 60% 1fr; }
+    #canvas { border-right: 0; border-bottom: 1px solid var(--line); }
+  }
+</style>
+</head>
+<body>
+<div id="shell">
+<header class="bar">
+  <h1>流程圖 → Mermaid</h1>
+  <button id="add">＋ 節點</button>
+  <select id="shape" title="新節點形狀">
+    <option value="box">矩形</option>
+    <option value="round">圓角</option>
+    <option value="diamond">菱形</option>
+  </select>
+  <select id="dir" title="方向">
+    <option value="TD">TD 由上而下</option>
+    <option value="LR">LR 由左而右</option>
+  </select>
+  <span class="spacer"></span>
+  <span id="status" class="status">—</span>
+</header>
+<main>
+  <svg id="canvas">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="currentColor"></path>
+      </marker>
+    </defs>
+    <g id="edges"></g>
+    <g id="nodes"></g>
+  </svg>
+  <div id="side">
+    <pre id="out"></pre>
+    <p class="hint">從節點邊上的小圓點拉到另一個節點就連線 · 滑過節點或線按紅色 ✕ 刪除（節點也可選取後按 Delete）· 雙擊節點改文字 · 點線可加標籤</p>
+    <div class="acts">
+      <button id="copy">複製 Mermaid</button>
+      <button id="copymd">複製 Markdown</button>
+      <button id="send">送到即時預覽</button>
+      <button id="clear">清空</button>
+    </div>
+  </div>
+</main>
+</div>
+<script src="./nav.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const svg = $('canvas'), gNodes = $('nodes'), gEdges = $('edges'), out = $('out'), status = $('status');
+const W = 140, H = 48;
+
+const blank = () => ({
+  dir: 'TD',
+  seq: 3,
+  nodes: [
+    { id: 'n1', x: 220, y: 90, text: '開始', shape: 'round' },
+    { id: 'n2', x: 220, y: 230, text: '處理', shape: 'box' },
+  ],
+  edges: [{ from: 'n1', to: 'n2', label: '' }],
+});
+let g = JSON.parse(localStorage.getItem('draw.graph') ?? 'null') ?? blank();
+let sel = null;          // 選取中的節點 id
+
+const node = id => g.nodes.find(n => n.id === id);
+
+// 四邊各一個連線點
+const halfH = n => n.shape === 'diamond' ? H * 0.8 : H / 2;
+const handles = n => [
+  { x: 0, y: -halfH(n) }, { x: W / 2, y: 0 }, { x: 0, y: halfH(n) }, { x: -W / 2, y: 0 },
+];
+
+// 滑過就出現的紅色 ✕，節點與線共用
+const delBadge = (x, y) => `<g class="del" transform="translate(${x},${y})">
+  <circle r="9"></circle><text text-anchor="middle" dominant-baseline="central">✕</text></g>`;
+
+function shapeEl(n) {
+  if (n.shape === 'diamond') {
+    const p = [[0, -H * 0.8], [W / 2, 0], [0, H * 0.8], [-W / 2, 0]].map(a => a.join(',')).join(' ');
+    return `<polygon class="box" points="${p}"></polygon>`;
+  }
+  return `<rect class="box" x="${-W / 2}" y="${-H / 2}" width="${W}" height="${H}" rx="${n.shape === 'round' ? 24 : 4}"></rect>`;
+}
+
+// 線段端點：從中心往目標方向退到節點邊界（用外接矩形近似，菱形也堪用）
+function anchor(from, to) {
+  const dx = to.x - from.x, dy = to.y - from.y;
+  const hw = W / 2 + 4, hh = halfH(from) + 4;
+  const t = Math.min(dx ? hw / Math.abs(dx) : Infinity, dy ? hh / Math.abs(dy) : Infinity);
+  return t === Infinity ? from : { x: from.x + dx * t, y: from.y + dy * t };
+}
+
+function draw() {
+  gNodes.innerHTML = g.nodes.map(n => `
+    <g class="node${n.id === sel ? ' sel' : ''}" data-id="${n.id}" transform="translate(${n.x},${n.y})">
+      ${shapeEl(n)}<text>${esc(n.text)}</text>
+      ${handles(n).map(h => `<circle class="handle" r="6" cx="${h.x}" cy="${h.y}"></circle>`).join('')}
+      ${delBadge(W / 2 + 10, -halfH(n) - 10)}
+    </g>`).join('');
+  gEdges.innerHTML = g.edges.map((e, i) => {
+    const a = node(e.from), b = node(e.to);
+    if (!a || !b) return '';
+    const p1 = anchor(a, b), p2 = anchor(b, a);
+    const mid = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
+    return `<g data-edge="${i}">
+      <path class="edge" d="M${p1.x},${p1.y} L${p2.x},${p2.y}" marker-end="url(#arrow)"></path>
+      <path class="edge-hit" d="M${p1.x},${p1.y} L${p2.x},${p2.y}"></path>
+      ${e.label ? `<text class="edge-label" x="${mid.x}" y="${mid.y - 6}">${esc(e.label)}</text>` : ''}
+      ${delBadge(mid.x + 16, mid.y)}
+    </g>`;
+  }).join('');
+  $('dir').value = g.dir;
+  emit();
+  localStorage.setItem('draw.graph', JSON.stringify(g));
+}
+const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+// ── 產生 Mermaid ────────────────────────────────────────────
+const WRAP = { box: ['[', ']'], round: ['(', ')'], diamond: ['{', '}'] };
+function mermaid() {
+  const lines = [`flowchart ${g.dir}`];
+  for (const n of g.nodes) {
+    const [l, r] = WRAP[n.shape] ?? WRAP.box;
+    lines.push(`  ${n.id}${l}"${n.text.replace(/"/g, "'")}"${r}`);
+  }
+  for (const e of g.edges) {
+    lines.push(e.label ? `  ${e.from} -- ${e.label} --> ${e.to}` : `  ${e.from} --> ${e.to}`);
+  }
+  return lines.join('\n');
+}
+function emit() { out.textContent = mermaid(); }
+
+// ── 互動 ───────────────────────────────────────────────────
+function pt(e) {
+  const r = svg.getBoundingClientRect();
+  return { x: e.clientX - r.left, y: e.clientY - r.top };
+}
+svg.addEventListener('pointerdown', e => {
+  const badge = e.target.closest('.del');
+  if (badge) {
+    const on = badge.closest('[data-edge]');
+    if (on) g.edges.splice(+on.dataset.edge, 1);
+    else removeNode(badge.closest('.node').dataset.id);
+    draw();
+    return;
+  }
+  const el = e.target.closest('.node');
+  const edge = e.target.closest('[data-edge]');
+  if (!el) { if (!edge) { sel = null; draw(); } return; }
+  const n = node(el.dataset.id);
+
+  // 從節點上的小圓點拉出去 = 連線；拖節點本體 = 移動
+  if (e.target.classList.contains('handle')) {
+    try { svg.setPointerCapture(e.pointerId); } catch {}
+    const temp = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    temp.setAttribute('class', 'temp');
+    gEdges.appendChild(temp);
+    let over = null;
+    const move = ev => {
+      const p = pt(ev);
+      temp.setAttribute('d', `M${n.x},${n.y} L${p.x},${p.y}`);
+      const hit = document.elementFromPoint(ev.clientX, ev.clientY)?.closest('.node');
+      const id = hit && hit.dataset.id !== n.id ? hit.dataset.id : null;
+      if (id !== over) {
+        gNodes.querySelector('.target')?.classList.remove('target');
+        if (id) gNodes.querySelector(`[data-id="${id}"]`).classList.add('target');
+        over = id;
+      }
+    };
+    const up = ev => {
+      svg.removeEventListener('pointermove', move);
+      temp.remove();
+      const hit = document.elementFromPoint(ev.clientX, ev.clientY)?.closest('.node');
+      if (hit && hit.dataset.id !== n.id) {
+        g.edges.push({ from: n.id, to: hit.dataset.id, label: '' });
+        say('已連線');
+      }
+      draw();
+    };
+    svg.addEventListener('pointermove', move);
+    svg.addEventListener('pointerup', up, { once: true });
+    svg.addEventListener('pointercancel', up, { once: true });
+    return;
+  }
+
+  sel = n.id;
+  const start = pt(e), from = { x: n.x, y: n.y };
+  try { svg.setPointerCapture(e.pointerId); } catch {}
+  const move = ev => {
+    const p = pt(ev);
+    n.x = Math.round(from.x + p.x - start.x);
+    n.y = Math.round(from.y + p.y - start.y);
+    draw();
+  };
+  const up = () => svg.removeEventListener('pointermove', move);
+  svg.addEventListener('pointermove', move);
+  svg.addEventListener('pointerup', up, { once: true });
+  svg.addEventListener('pointercancel', up, { once: true });
+  draw();
+});
+svg.addEventListener('dblclick', e => {
+  const el = e.target.closest('.node');
+  if (!el) return;
+  const n = node(el.dataset.id);
+  const v = prompt('節點文字', n.text);
+  if (v !== null) { n.text = v.trim() || n.text; draw(); }
+});
+svg.addEventListener('click', e => {
+  const el = e.target.closest('[data-edge]');
+  if (!el || e.target.closest('.node') || e.target.closest('.del')) return;
+  const edge = g.edges[+el.dataset.edge];
+  const v = prompt('線段標籤（留空移除）', edge.label);
+  if (v !== null) { edge.label = v.trim(); draw(); }
+});
+addEventListener('keydown', e => {
+  if (e.key !== 'Delete' && e.key !== 'Backspace') return;
+  if (/^(INPUT|TEXTAREA)$/.test(e.target.tagName) || !sel) return;
+  e.preventDefault();
+  removeNode(sel);
+});
+function removeNode(id) {
+  g.nodes = g.nodes.filter(n => n.id !== id);
+  g.edges = g.edges.filter(e => e.from !== id && e.to !== id);
+  sel = null;
+  draw();
+}
+
+$('add').addEventListener('click', () => {
+  const id = 'n' + g.seq++;
+  const last = g.nodes[g.nodes.length - 1];
+  g.nodes.push({
+    id,
+    x: last ? last.x + (g.dir === 'LR' ? 190 : 0) : 220,
+    y: last ? last.y + (g.dir === 'LR' ? 0 : 110) : 90,
+    text: '節點 ' + (g.nodes.length + 1),
+    shape: $('shape').value,
+  });
+  sel = id;
+  draw();
+});
+$('dir').addEventListener('change', () => { g.dir = $('dir').value; draw(); });
+$('clear').addEventListener('click', () => {
+  if (confirm('清空目前的流程圖？')) { g = blank(); sel = null; draw(); }
+});
+$('copy').addEventListener('click', () => copy(mermaid()));
+$('copymd').addEventListener('click', () => copy('```mermaid\n' + mermaid() + '\n```'));
+$('send').addEventListener('click', () => {
+  localStorage.setItem('mermaid.src', mermaid());
+  location.href = './mermaid.html';
+});
+async function copy(text) {
+  try { await navigator.clipboard.writeText(text); say('已複製'); }
+  catch { say('複製失敗，請手動選取'); }
+}
+let t;
+function say(msg) { status.textContent = msg; clearTimeout(t); t = setTimeout(() => status.textContent = '—', 2500); }
+
+draw();
+</script>
+</body>
+</html>

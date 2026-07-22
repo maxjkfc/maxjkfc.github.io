@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mermaid 即時預覽 — Dev Tools</title>
+<meta name="description" content="在瀏覽器即時編輯並預覽 Mermaid 流程圖，支援匯出 SVG。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧜</text></svg>">
+<link rel="stylesheet" href="./style.css">
+<style>
+  html, body { height: 100%; }
+  #shell { height: 100%; }
+  main { flex: 1; display: grid; grid-template-columns: minmax(280px, 40%) 1fr; min-height: 0; }
+  #src {
+    font-family: var(--font-mono); font-size: 13px; line-height: 1.6;
+    border: 0; border-right: 1px solid var(--line); resize: none; padding: 16px;
+    background: var(--panel); color: var(--ink); outline: none; tab-size: 2;
+  }
+  #view { overflow: auto; padding: 16px; cursor: grab; }
+  #view.dragging { cursor: grabbing; }
+  #stage { transform-origin: 0 0; width: max-content; margin: 0 auto; }
+  #stage svg { display: block; height: auto; }
+  #zoom { display: flex; align-items: center; gap: 2px; }
+  #zoom button { padding: 5px 9px; }
+  #pct { font-family: var(--font-mono); font-size: 12px; min-width: 52px; }
+  #err { display: none; margin: 0; padding: 10px 16px; border-top: 1px solid var(--line);
+         background: var(--panel); color: var(--danger); font-family: var(--font-mono);
+         font-size: 12px; white-space: pre-wrap; max-height: 30vh; overflow: auto; }
+  @media (max-width: 720px) {
+    main { grid-template-columns: 1fr; grid-template-rows: 40% 1fr; }
+    #src { border-right: 0; border-bottom: 1px solid var(--line); }
+  }
+</style>
+</head>
+<body>
+<div id="shell">
+<header class="bar">
+  <h1>Mermaid 即時預覽</h1>
+  <select id="sample" title="範例"></select>
+  <select id="theme" title="主題">
+    <option value="default">default</option>
+    <option value="dark">dark</option>
+    <option value="neutral">neutral</option>
+    <option value="forest">forest</option>
+  </select>
+  <span id="zoom">
+    <button id="out" title="縮小">−</button>
+    <button id="pct" title="還原 100%">100%</button>
+    <button id="in" title="放大">＋</button>
+    <button id="fit" title="符合視窗寬度">符合</button>
+  </span>
+  <button id="svg">下載 SVG</button>
+  <button id="png">下載 PNG</button>
+  <span class="spacer"></span>
+  <span id="status" class="status">—</span>
+</header>
+<main>
+  <textarea id="src" spellcheck="false" placeholder="在這裡輸入 Mermaid 語法…"></textarea>
+  <div id="view"><div id="stage"></div></div>
+</main>
+<pre id="err"></pre>
+</div>
+<script src="./nav.js"></script>
+
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+const SAMPLES = {
+  'flowchart': `flowchart TD
+  A[使用者送出請求] --> B{已登入?}
+  B -- 否 --> C[導向登入頁]
+  B -- 是 --> D[查詢資料]
+  D --> E[回傳結果]`,
+  'sequence': `sequenceDiagram
+  participant U as User
+  participant API
+  participant DB
+  U->>API: POST /orders
+  API->>DB: INSERT order
+  DB-->>API: order_id
+  API-->>U: 201 Created`,
+  'state': `stateDiagram-v2
+  [*] --> Pending
+  Pending --> Active: approve
+  Pending --> Rejected: reject
+  Active --> Closed: finish
+  Closed --> [*]`,
+  'er': `erDiagram
+  CUSTOMER ||--o{ ORDER : places
+  ORDER ||--|{ ORDER_ITEM : contains
+  PRODUCT ||--o{ ORDER_ITEM : "listed in"`,
+  'gantt': `gantt
+  title 專案排程
+  dateFormat YYYY-MM-DD
+  section 設計
+  需求確認 :done, a1, 2026-07-01, 5d
+  介面設計 :active, a2, after a1, 7d
+  section 開發
+  實作 :a3, after a2, 14d`,
+};
+
+const $ = id => document.getElementById(id);
+const src = $('src'), view = $('view'), stage = $('stage'), err = $('err'), status = $('status');
+
+for (const k of Object.keys(SAMPLES)) $('sample').add(new Option(k, k));
+
+const saved = localStorage.getItem('mermaid.src');
+src.value = saved ?? SAMPLES.flowchart;
+$('theme').value = localStorage.getItem('mermaid.theme')
+  ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default');
+
+let seq = 0;
+async function render() {
+  const code = src.value.trim();
+  localStorage.setItem('mermaid.src', src.value);
+  if (!code) { stage.innerHTML = ''; ok('空白'); return; }
+  // htmlLabels:false → 標籤用 <text> 而非 <foreignObject>，PNG 匯出才不會掉字
+  mermaid.initialize({ startOnLoad: false, theme: $('theme').value, securityLevel: 'strict', htmlLabels: false, flowchart: { htmlLabels: false } });
+  try {
+    const { svg } = await mermaid.render('g' + (++seq), code);
+    stage.innerHTML = svg;
+    applyScale();
+    ok(`已更新 · ${code.split('\n').length} 行`);
+  } catch (e) {
+    // ponytail: 出錯時保留上一張圖，只在下方顯示訊息
+    fail(e.message ?? String(e));
+  }
+}
+function ok(msg) { status.textContent = msg; status.classList.remove('error'); err.style.display = 'none'; }
+function fail(msg) { status.textContent = '語法錯誤'; status.classList.add('error'); err.textContent = msg; err.style.display = 'block'; }
+
+let timer;
+src.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(render, 250); });
+$('theme').addEventListener('change', () => { localStorage.setItem('mermaid.theme', $('theme').value); render(); });
+$('sample').addEventListener('change', e => { src.value = SAMPLES[e.target.value]; render(); });
+
+// Tab 鍵插入兩個空白，而不是跳離 textarea
+src.addEventListener('keydown', e => {
+  if (e.key !== 'Tab') return;
+  e.preventDefault();
+  const { selectionStart: s, selectionEnd: t } = src;
+  src.setRangeText('  ', s, t, 'end');
+});
+
+// 縮放：直接改 svg 的 px 寬度（而非 CSS transform），捲軸範圍才會跟著長出來
+let scale = 1;
+function natural() {
+  const el = stage.querySelector('svg');
+  if (!el) return null;
+  const [, , w, h] = (el.getAttribute('viewBox') ?? '0 0 0 0').split(/[\s,]+/).map(Number);
+  return w && h ? { el, w, h } : null;
+}
+let userZoomed = false;
+function applyScale() {
+  const n = natural();
+  if (!n) return;
+  // 使用者還沒調過縮放時，太寬的圖自動縮到剛好塞進畫面（只縮不放）
+  if (!userZoomed) scale = Math.min(1, (view.clientWidth - 32) / n.w);
+  n.el.style.maxWidth = 'none';
+  n.el.style.width = n.w * scale + 'px';
+  $('pct').textContent = Math.round(scale * 100) + '%';
+}
+function setScale(s) { userZoomed = true; scale = Math.min(8, Math.max(0.1, s)); applyScale(); }
+$('in').addEventListener('click', () => setScale(scale * 1.25));
+$('out').addEventListener('click', () => setScale(scale / 1.25));
+$('pct').addEventListener('click', () => setScale(1));
+$('fit').addEventListener('click', () => {
+  const n = natural();
+  if (n) setScale((view.clientWidth - 32) / n.w);
+});
+addEventListener('resize', () => { if (!userZoomed) applyScale(); });
+// 觸控板 pinch 與 ctrl/⌘ + 滾輪縮放；一般滾輪維持捲動
+view.addEventListener('wheel', e => {
+  if (!e.ctrlKey && !e.metaKey) return;
+  e.preventDefault();
+  setScale(scale * Math.exp(-e.deltaY / 200));
+}, { passive: false });
+// 拖曳平移
+view.addEventListener('pointerdown', e => {
+  if (e.button !== 0) return;
+  const from = { x: e.clientX, y: e.clientY, l: view.scrollLeft, t: view.scrollTop };
+  view.setPointerCapture(e.pointerId);
+  view.classList.add('dragging');
+  const move = ev => {
+    view.scrollLeft = from.l - (ev.clientX - from.x);
+    view.scrollTop = from.t - (ev.clientY - from.y);
+  };
+  const up = () => {
+    view.removeEventListener('pointermove', move);
+    view.classList.remove('dragging');
+  };
+  view.addEventListener('pointermove', move);
+  view.addEventListener('pointerup', up, { once: true });
+  view.addEventListener('pointercancel', up, { once: true });
+});
+
+// 匯出用原始尺寸，不受畫面縮放影響
+function exportSvg() {
+  const n = natural();
+  if (!n) { fail('目前沒有可匯出的圖'); return null; }
+  const clone = n.el.cloneNode(true);
+  clone.style.width = clone.style.maxWidth = '';
+  clone.setAttribute('width', n.w);
+  clone.setAttribute('height', n.h);
+  return { markup: clone.outerHTML, w: n.w, h: n.h };
+}
+function download(blob, name) {
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: name });
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+$('svg').addEventListener('click', () => {
+  const e = exportSvg();
+  if (e) download(new Blob([e.markup], { type: 'image/svg+xml' }), 'diagram.svg');
+});
+$('png').addEventListener('click', () => {
+  const box = exportSvg();
+  if (!box) return;
+  const img = new Image();
+  img.onload = () => {
+    const c = Object.assign(document.createElement('canvas'), { width: box.w * 2, height: box.h * 2 });
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = getComputedStyle(document.body).backgroundColor;
+    ctx.fillRect(0, 0, c.width, c.height);
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    c.toBlob(b => download(b, 'diagram.png'));
+  };
+  img.onerror = () => fail('PNG 轉檔失敗，請改用 SVG');
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(box.markup);
+});
+
+render();
+</script>
+</body>
+</html>
