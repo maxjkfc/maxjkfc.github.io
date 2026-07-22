@@ -9,16 +9,13 @@
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<div class="wrap">
-  <h2>Dev Tools</h2>
-  <p class="lede">純前端小工具，全部在瀏覽器內執行，資料不離開這台電腦。</p>
-  <ul class="tools">
-    <li>
-      <a href="./mermaid.html">Mermaid 即時預覽</a>
-      <div class="desc">邊寫邊看流程圖／時序圖／ER 圖，可匯出 SVG 與 PNG。</div>
-    </li>
-  </ul>
-  <p><a href="../">← 回首頁</a></p>
+<div id="shell">
+  <div class="wrap">
+    <h2>Dev Tools</h2>
+    <p class="lede">純前端小工具，全部在瀏覽器內執行，資料不離開這台電腦。</p>
+    <ul class="tools" id="tool-list"></ul>
+  </div>
 </div>
+<script src="./nav.js"></script>
 </body>
 </html>

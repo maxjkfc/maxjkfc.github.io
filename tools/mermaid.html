@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="./style.css">
 <style>
   html, body { height: 100%; }
-  body { display: flex; flex-direction: column; }
+  #shell { height: 100%; }
   main { flex: 1; display: grid; grid-template-columns: minmax(280px, 40%) 1fr; min-height: 0; }
   #src {
     font-family: var(--font-mono); font-size: 13px; line-height: 1.6;
@@ -33,6 +33,7 @@
 </style>
 </head>
 <body>
+<div id="shell">
 <header class="bar">
   <h1>Mermaid 即時預覽</h1>
   <select id="sample" title="範例"></select>
@@ -52,13 +53,14 @@
   <button id="png">下載 PNG</button>
   <span class="spacer"></span>
   <span id="status" class="status">—</span>
-  <a href="./">全部工具</a>
 </header>
 <main>
   <textarea id="src" spellcheck="false" placeholder="在這裡輸入 Mermaid 語法…"></textarea>
   <div id="view"><div id="stage"></div></div>
 </main>
 <pre id="err"></pre>
+</div>
+<script src="./nav.js"></script>
 
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';

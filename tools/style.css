@@ -27,6 +27,34 @@ body {
 a { color: var(--accent); text-decoration: none; }
 a:hover { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 4px; }
 
+body { display: flex; min-height: 100vh; }
+#shell { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+aside.rail {
+  flex: 0 0 176px;
+  border-right: 1px solid var(--line);
+  background: var(--panel);
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+aside.rail nav { display: contents; }
+aside.rail a { display: block; padding: 6px 10px; border-radius: 6px; font-size: 14px; color: var(--ink); }
+aside.rail a:hover { background: var(--bg); color: var(--accent); text-decoration: none; }
+aside.rail .brand { font-weight: 600; margin-bottom: 10px; }
+aside.rail .active { background: var(--bg); color: var(--accent); font-weight: 600; }
+aside.rail .home { margin-top: auto; color: var(--muted); font-size: 13px; }
+@media (max-width: 720px) {
+  body { display: block; }
+  aside.rail {
+    flex-direction: row; align-items: center; gap: 6px; padding: 8px 12px;
+    overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line);
+  }
+  aside.rail a { white-space: nowrap; padding: 4px 8px; }
+  aside.rail .home { margin-top: 0; margin-left: auto; }
+}
+
 header.bar {
   display: flex;
   align-items: center;
