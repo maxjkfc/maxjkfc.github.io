@@ -22,6 +22,7 @@ gtag('config', 'G-GFW7V018T9');
 <meta name="twitter:description" content="江豈鋒 Max Chiang — AI 時代的系統建構者。12 年把複雜的問題建構成可長期運作的系統，現在把工程判斷轉化成人與 AI 都能穩定執行的工作流。">
 <link rel="canonical" href="https://maxjkfc.github.io/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎛️</text></svg>">
+<script src="/theme.js"></script>
 </head>
 <body>
 <style>
@@ -32,14 +33,15 @@ gtag('config', 'G-GFW7V018T9');
     --line: #D8DEE4;
     --accent: #A2571F;
     --accent-strong: #8A4717;
+    --soft: #E7ECF1;
     --font-sans: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, sans-serif;
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #0F1317; --ink: #E6EBEF; --muted: #94A1AB; --line: #29323B; --accent: #D6905A; --accent-strong: #E3A876; }
+    :root { --bg: #0F1317; --ink: #E6EBEF; --muted: #94A1AB; --line: #29323B; --accent: #D6905A; --accent-strong: #E3A876; --soft: #1F262E; }
   }
-  :root[data-theme="dark"] { --bg: #0F1317; --ink: #E6EBEF; --muted: #94A1AB; --line: #29323B; --accent: #D6905A; --accent-strong: #E3A876; }
-  :root[data-theme="light"] { --bg: #F3F5F7; --ink: #182129; --muted: #56646F; --line: #D8DEE4; --accent: #A2571F; --accent-strong: #8A4717; }
+  :root[data-theme="dark"] { --bg: #0F1317; --ink: #E6EBEF; --muted: #94A1AB; --line: #29323B; --accent: #D6905A; --accent-strong: #E3A876; --soft: #1F262E; }
+  :root[data-theme="light"] { --bg: #F3F5F7; --ink: #182129; --muted: #56646F; --line: #D8DEE4; --accent: #A2571F; --accent-strong: #8A4717; --soft: #E7ECF1; }
 
   * { box-sizing: border-box; }
   body {
@@ -93,9 +95,11 @@ gtag('config', 'G-GFW7V018T9');
     min-height: 44px;
     padding: 6px 16px;
     border: 1px solid var(--line);
+    border-radius: 999px;
     color: var(--ink);
+    transition: background .15s, border-color .15s, color .15s;
   }
-  .top nav a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .top nav a:hover { border-color: var(--accent); background: var(--soft); color: var(--accent); text-decoration: none; }
 
   /* ── Hero：身分優先 ───────────────── */
   .hero { padding: 104px 0 72px; }
@@ -131,11 +135,13 @@ gtag('config', 'G-GFW7V018T9');
     font-size: 0.8rem;
     padding: 10px 20px;
     border: 1px solid var(--line);
+    border-radius: 999px;
     color: var(--ink);
+    transition: background .15s, border-color .15s, color .15s;
   }
   .hero .cta a.primary { border-color: var(--accent); background: var(--accent); color: var(--bg); font-weight: 600; }
   .hero .cta a.primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); color: var(--bg); text-decoration: none; }
-  .hero .cta a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .hero .cta a:hover { border-color: var(--accent); background: var(--soft); color: var(--accent); text-decoration: none; }
 
   /* ── 區段 ───────────────── */
   section { padding: 56px 0; border-top: 1px solid var(--line); }
