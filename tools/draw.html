@@ -19,6 +19,10 @@
   #canvas .node text { fill: var(--ink); font-size: 14px; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
   #canvas .handle { fill: var(--accent); opacity: 0; cursor: crosshair; transition: opacity .12s; }
   #canvas .node:hover .handle, #canvas .node.sel .handle { opacity: 1; }
+  #canvas .del { opacity: 0; cursor: pointer; transition: opacity .12s; }
+  #canvas .del circle { fill: var(--danger); }
+  #canvas .del text { fill: var(--panel); font-size: 11px; font-weight: 700; }
+  #canvas .node:hover .del, #canvas .node.sel .del, #canvas g[data-edge]:hover .del { opacity: 1; }
   #canvas .temp { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 5 4; fill: none; pointer-events: none; }
   #canvas .node.target .box { stroke: var(--accent); stroke-width: 2.5; }
   #canvas .edge { stroke: var(--muted); stroke-width: 1.5; fill: none; cursor: pointer; }
@@ -45,7 +49,6 @@
     <option value="round">圓角</option>
     <option value="diamond">菱形</option>
   </select>
-  <button id="del">刪除</button>
   <select id="dir" title="方向">
     <option value="TD">TD 由上而下</option>
     <option value="LR">LR 由左而右</option>
@@ -65,7 +68,7 @@
   </svg>
   <div id="side">
     <pre id="out"></pre>
-    <p class="hint">從節點邊上的小圓點拉到另一個節點就連線 · 雙擊節點改文字 · 點線可加標籤 · 選取後按 Delete 刪除</p>
+    <p class="hint">從節點邊上的小圓點拉到另一個節點就連線 · 滑過節點或線按紅色 ✕ 刪除（節點也可選取後按 Delete）· 雙擊節點改文字 · 點線可加標籤</p>
     <div class="acts">
       <button id="copy">複製 Mermaid</button>
       <button id="copymd">複製 Markdown</button>
@@ -101,6 +104,10 @@ const handles = n => [
   { x: 0, y: -halfH(n) }, { x: W / 2, y: 0 }, { x: 0, y: halfH(n) }, { x: -W / 2, y: 0 },
 ];
 
+// 滑過就出現的紅色 ✕，節點與線共用
+const delBadge = (x, y) => `<g class="del" transform="translate(${x},${y})">
+  <circle r="9"></circle><text text-anchor="middle" dominant-baseline="central">✕</text></g>`;
+
 function shapeEl(n) {
   if (n.shape === 'diamond') {
     const p = [[0, -H * 0.8], [W / 2, 0], [0, H * 0.8], [-W / 2, 0]].map(a => a.join(',')).join(' ');
@@ -122,6 +129,7 @@ function draw() {
     <g class="node${n.id === sel ? ' sel' : ''}" data-id="${n.id}" transform="translate(${n.x},${n.y})">
       ${shapeEl(n)}<text>${esc(n.text)}</text>
       ${handles(n).map(h => `<circle class="handle" r="6" cx="${h.x}" cy="${h.y}"></circle>`).join('')}
+      ${delBadge(W / 2 + 10, -halfH(n) - 10)}
     </g>`).join('');
   gEdges.innerHTML = g.edges.map((e, i) => {
     const a = node(e.from), b = node(e.to);
@@ -132,6 +140,7 @@ function draw() {
       <path class="edge" d="M${p1.x},${p1.y} L${p2.x},${p2.y}" marker-end="url(#arrow)"></path>
       <path class="edge-hit" d="M${p1.x},${p1.y} L${p2.x},${p2.y}"></path>
       ${e.label ? `<text class="edge-label" x="${mid.x}" y="${mid.y - 6}">${esc(e.label)}</text>` : ''}
+      ${delBadge(mid.x + 16, mid.y)}
     </g>`;
   }).join('');
   $('dir').value = g.dir;
@@ -161,6 +170,14 @@ function pt(e) {
   return { x: e.clientX - r.left, y: e.clientY - r.top };
 }
 svg.addEventListener('pointerdown', e => {
+  const badge = e.target.closest('.del');
+  if (badge) {
+    const on = badge.closest('[data-edge]');
+    if (on) g.edges.splice(+on.dataset.edge, 1);
+    else removeNode(badge.closest('.node').dataset.id);
+    draw();
+    return;
+  }
   const el = e.target.closest('.node');
   const edge = e.target.closest('[data-edge]');
   if (!el) { if (!edge) { sel = null; draw(); } return; }
@@ -224,7 +241,7 @@ svg.addEventListener('dblclick', e => {
 });
 svg.addEventListener('click', e => {
   const el = e.target.closest('[data-edge]');
-  if (!el || e.target.closest('.node')) return;
+  if (!el || e.target.closest('.node') || e.target.closest('.del')) return;
   const edge = g.edges[+el.dataset.edge];
   const v = prompt('線段標籤（留空移除）', edge.label);
   if (v !== null) { edge.label = v.trim(); draw(); }
@@ -255,7 +272,6 @@ $('add').addEventListener('click', () => {
   sel = id;
   draw();
 });
-$('del').addEventListener('click', () => sel ? removeNode(sel) : say('先選一個節點'));
 $('dir').addEventListener('change', () => { g.dir = $('dir').value; draw(); });
 $('clear').addEventListener('click', () => {
   if (confirm('清空目前的流程圖？')) { g = blank(); sel = null; draw(); }
