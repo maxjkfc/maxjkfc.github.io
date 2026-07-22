@@ -16,8 +16,13 @@
     border: 0; border-right: 1px solid var(--line); resize: none; padding: 16px;
     background: var(--panel); color: var(--ink); outline: none; tab-size: 2;
   }
-  #view { overflow: auto; padding: 16px; display: flex; align-items: flex-start; justify-content: center; }
-  #view svg { max-width: 100%; height: auto; }
+  #view { overflow: auto; padding: 16px; cursor: grab; }
+  #view.dragging { cursor: grabbing; }
+  #stage { transform-origin: 0 0; width: max-content; margin: 0 auto; }
+  #stage svg { display: block; height: auto; }
+  #zoom { display: flex; align-items: center; gap: 2px; }
+  #zoom button { padding: 5px 9px; }
+  #pct { font-family: var(--font-mono); font-size: 12px; min-width: 52px; }
   #err { display: none; margin: 0; padding: 10px 16px; border-top: 1px solid var(--line);
          background: var(--panel); color: var(--danger); font-family: var(--font-mono);
          font-size: 12px; white-space: pre-wrap; max-height: 30vh; overflow: auto; }
@@ -37,6 +42,12 @@
     <option value="neutral">neutral</option>
     <option value="forest">forest</option>
   </select>
+  <span id="zoom">
+    <button id="out" title="縮小">−</button>
+    <button id="pct" title="還原 100%">100%</button>
+    <button id="in" title="放大">＋</button>
+    <button id="fit" title="符合視窗寬度">符合</button>
+  </span>
   <button id="svg">下載 SVG</button>
   <button id="png">下載 PNG</button>
   <span class="spacer"></span>
@@ -45,7 +56,7 @@
 </header>
 <main>
   <textarea id="src" spellcheck="false" placeholder="在這裡輸入 Mermaid 語法…"></textarea>
-  <div id="view"></div>
+  <div id="view"><div id="stage"></div></div>
 </main>
 <pre id="err"></pre>
 
@@ -87,7 +98,7 @@ const SAMPLES = {
 };
 
 const $ = id => document.getElementById(id);
-const src = $('src'), view = $('view'), err = $('err'), status = $('status');
+const src = $('src'), view = $('view'), stage = $('stage'), err = $('err'), status = $('status');
 
 for (const k of Object.keys(SAMPLES)) $('sample').add(new Option(k, k));
 
@@ -100,12 +111,13 @@ let seq = 0;
 async function render() {
   const code = src.value.trim();
   localStorage.setItem('mermaid.src', src.value);
-  if (!code) { view.innerHTML = ''; ok('空白'); return; }
+  if (!code) { stage.innerHTML = ''; ok('空白'); return; }
   // htmlLabels:false → 標籤用 <text> 而非 <foreignObject>，PNG 匯出才不會掉字
   mermaid.initialize({ startOnLoad: false, theme: $('theme').value, securityLevel: 'strict', htmlLabels: false, flowchart: { htmlLabels: false } });
   try {
     const { svg } = await mermaid.render('g' + (++seq), code);
-    view.innerHTML = svg;
+    stage.innerHTML = svg;
+    applyScale();
     ok(`已更新 · ${code.split('\n').length} 行`);
   } catch (e) {
     // ponytail: 出錯時保留上一張圖，只在下方顯示訊息
@@ -128,10 +140,67 @@ src.addEventListener('keydown', e => {
   src.setRangeText('  ', s, t, 'end');
 });
 
-function currentSvg() {
-  const el = view.querySelector('svg');
-  if (!el) { fail('目前沒有可匯出的圖'); return null; }
-  return el;
+// 縮放：直接改 svg 的 px 寬度（而非 CSS transform），捲軸範圍才會跟著長出來
+let scale = 1;
+function natural() {
+  const el = stage.querySelector('svg');
+  if (!el) return null;
+  const [, , w, h] = (el.getAttribute('viewBox') ?? '0 0 0 0').split(/[\s,]+/).map(Number);
+  return w && h ? { el, w, h } : null;
+}
+let userZoomed = false;
+function applyScale() {
+  const n = natural();
+  if (!n) return;
+  // 使用者還沒調過縮放時，太寬的圖自動縮到剛好塞進畫面（只縮不放）
+  if (!userZoomed) scale = Math.min(1, (view.clientWidth - 32) / n.w);
+  n.el.style.maxWidth = 'none';
+  n.el.style.width = n.w * scale + 'px';
+  $('pct').textContent = Math.round(scale * 100) + '%';
+}
+function setScale(s) { userZoomed = true; scale = Math.min(8, Math.max(0.1, s)); applyScale(); }
+$('in').addEventListener('click', () => setScale(scale * 1.25));
+$('out').addEventListener('click', () => setScale(scale / 1.25));
+$('pct').addEventListener('click', () => setScale(1));
+$('fit').addEventListener('click', () => {
+  const n = natural();
+  if (n) setScale((view.clientWidth - 32) / n.w);
+});
+addEventListener('resize', () => { if (!userZoomed) applyScale(); });
+// 觸控板 pinch 與 ctrl/⌘ + 滾輪縮放；一般滾輪維持捲動
+view.addEventListener('wheel', e => {
+  if (!e.ctrlKey && !e.metaKey) return;
+  e.preventDefault();
+  setScale(scale * Math.exp(-e.deltaY / 200));
+}, { passive: false });
+// 拖曳平移
+view.addEventListener('pointerdown', e => {
+  if (e.button !== 0) return;
+  const from = { x: e.clientX, y: e.clientY, l: view.scrollLeft, t: view.scrollTop };
+  view.setPointerCapture(e.pointerId);
+  view.classList.add('dragging');
+  const move = ev => {
+    view.scrollLeft = from.l - (ev.clientX - from.x);
+    view.scrollTop = from.t - (ev.clientY - from.y);
+  };
+  const up = () => {
+    view.removeEventListener('pointermove', move);
+    view.classList.remove('dragging');
+  };
+  view.addEventListener('pointermove', move);
+  view.addEventListener('pointerup', up, { once: true });
+  view.addEventListener('pointercancel', up, { once: true });
+});
+
+// 匯出用原始尺寸，不受畫面縮放影響
+function exportSvg() {
+  const n = natural();
+  if (!n) { fail('目前沒有可匯出的圖'); return null; }
+  const clone = n.el.cloneNode(true);
+  clone.style.width = clone.style.maxWidth = '';
+  clone.setAttribute('width', n.w);
+  clone.setAttribute('height', n.h);
+  return { markup: clone.outerHTML, w: n.w, h: n.h };
 }
 function download(blob, name) {
   const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: name });
@@ -139,16 +208,15 @@ function download(blob, name) {
   URL.revokeObjectURL(a.href);
 }
 $('svg').addEventListener('click', () => {
-  const el = currentSvg();
-  if (el) download(new Blob([el.outerHTML], { type: 'image/svg+xml' }), 'diagram.svg');
+  const e = exportSvg();
+  if (e) download(new Blob([e.markup], { type: 'image/svg+xml' }), 'diagram.svg');
 });
 $('png').addEventListener('click', () => {
-  const el = currentSvg();
-  if (!el) return;
-  const box = el.getBoundingClientRect();
+  const box = exportSvg();
+  if (!box) return;
   const img = new Image();
   img.onload = () => {
-    const c = Object.assign(document.createElement('canvas'), { width: box.width * 2, height: box.height * 2 });
+    const c = Object.assign(document.createElement('canvas'), { width: box.w * 2, height: box.h * 2 });
     const ctx = c.getContext('2d');
     ctx.fillStyle = getComputedStyle(document.body).backgroundColor;
     ctx.fillRect(0, 0, c.width, c.height);
@@ -156,7 +224,7 @@ $('png').addEventListener('click', () => {
     c.toBlob(b => download(b, 'diagram.png'));
   };
   img.onerror = () => fail('PNG 轉檔失敗，請改用 SVG');
-  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(el.outerHTML);
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(box.markup);
 });
 
 render();
