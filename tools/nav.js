@@ -1,6 +1,7 @@
 // 工具清單：新增工具時只改這裡，側邊欄與 /tools/ 首頁會一起更新
 const TOOLS = [
   { href: 'mermaid.html', name: 'Mermaid 即時預覽', desc: '邊寫邊看流程圖／時序圖／ER 圖，可縮放與匯出 SVG、PNG。' },
+  { href: 'draw.html', name: '流程圖 → Mermaid', desc: '用拖拉的方式畫流程圖，直接產生 Mermaid 語法與 Markdown 區塊。' },
 ];
 
 const here = location.pathname.split('/').pop() || 'index.html';
