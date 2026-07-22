@@ -17,6 +17,10 @@
   #canvas .node .box { fill: var(--bg); stroke: var(--line); stroke-width: 1.5; }
   #canvas .node.sel .box { stroke: var(--accent); stroke-width: 2.5; }
   #canvas .node text { fill: var(--ink); font-size: 14px; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
+  #canvas .handle { fill: var(--accent); opacity: 0; cursor: crosshair; transition: opacity .12s; }
+  #canvas .node:hover .handle, #canvas .node.sel .handle { opacity: 1; }
+  #canvas .temp { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 5 4; fill: none; pointer-events: none; }
+  #canvas .node.target .box { stroke: var(--accent); stroke-width: 2.5; }
   #canvas .edge { stroke: var(--muted); stroke-width: 1.5; fill: none; cursor: pointer; }
   #canvas .edge-hit { stroke: transparent; stroke-width: 14; fill: none; cursor: pointer; }
   #canvas .edge-label { fill: var(--muted); font-size: 12px; text-anchor: middle; pointer-events: none; }
@@ -25,7 +29,6 @@
          font-size: 12.5px; line-height: 1.6; white-space: pre; color: var(--ink); }
   #side .acts { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 14px; border-top: 1px solid var(--line); }
   .hint { padding: 8px 14px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
-  header.bar button.on { border-color: var(--accent); color: var(--accent); }
   @media (max-width: 720px) {
     main { grid-template-columns: 1fr; grid-template-rows: 60% 1fr; }
     #canvas { border-right: 0; border-bottom: 1px solid var(--line); }
@@ -42,7 +45,6 @@
     <option value="round">圓角</option>
     <option value="diamond">菱形</option>
   </select>
-  <button id="link">連線</button>
   <button id="del">刪除</button>
   <select id="dir" title="方向">
     <option value="TD">TD 由上而下</option>
@@ -63,7 +65,7 @@
   </svg>
   <div id="side">
     <pre id="out"></pre>
-    <p class="hint">雙擊節點改文字 · 點線可加標籤 · 選取後按 Delete 刪除</p>
+    <p class="hint">從節點邊上的小圓點拉到另一個節點就連線 · 雙擊節點改文字 · 點線可加標籤 · 選取後按 Delete 刪除</p>
     <div class="acts">
       <button id="copy">複製 Mermaid</button>
       <button id="copymd">複製 Markdown</button>
@@ -90,7 +92,6 @@ const blank = () => ({
 });
 let g = JSON.parse(localStorage.getItem('draw.graph') ?? 'null') ?? blank();
 let sel = null;          // 選取中的節點 id
-let linking = null;      // 連線模式：null / 'armed' / 起點 id
 
 const node = id => g.nodes.find(n => n.id === id);
 
@@ -114,6 +115,7 @@ function draw() {
   gNodes.innerHTML = g.nodes.map(n => `
     <g class="node${n.id === sel ? ' sel' : ''}" data-id="${n.id}" transform="translate(${n.x},${n.y})">
       ${shapeEl(n)}<text>${esc(n.text)}</text>
+      <circle class="handle" r="6" cx="${g.dir === 'LR' ? W / 2 : 0}" cy="${g.dir === 'LR' ? 0 : (n.shape === 'diamond' ? H * 0.8 : H / 2)}"></circle>
     </g>`).join('');
   gEdges.innerHTML = g.edges.map((e, i) => {
     const a = node(e.from), b = node(e.to);
@@ -155,21 +157,46 @@ function pt(e) {
 svg.addEventListener('pointerdown', e => {
   const el = e.target.closest('.node');
   const edge = e.target.closest('[data-edge]');
-  if (!el) { if (!edge) { sel = null; linking = linking ? 'armed' : null; draw(); } return; }
+  if (!el) { if (!edge) { sel = null; draw(); } return; }
   const n = node(el.dataset.id);
 
-  if (linking) {
-    if (linking === 'armed') { linking = n.id; say('選擇終點'); }
-    else if (linking !== n.id) {
-      g.edges.push({ from: linking, to: n.id, label: '' });
-      linking = 'armed'; say('已連線，可繼續');
-    }
-    sel = n.id; draw(); return;
+  // 從節點上的小圓點拉出去 = 連線；拖節點本體 = 移動
+  if (e.target.classList.contains('handle')) {
+    try { svg.setPointerCapture(e.pointerId); } catch {}
+    const temp = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    temp.setAttribute('class', 'temp');
+    gEdges.appendChild(temp);
+    let over = null;
+    const move = ev => {
+      const p = pt(ev);
+      temp.setAttribute('d', `M${n.x},${n.y} L${p.x},${p.y}`);
+      const hit = document.elementFromPoint(ev.clientX, ev.clientY)?.closest('.node');
+      const id = hit && hit.dataset.id !== n.id ? hit.dataset.id : null;
+      if (id !== over) {
+        gNodes.querySelector('.target')?.classList.remove('target');
+        if (id) gNodes.querySelector(`[data-id="${id}"]`).classList.add('target');
+        over = id;
+      }
+    };
+    const up = ev => {
+      svg.removeEventListener('pointermove', move);
+      temp.remove();
+      const hit = document.elementFromPoint(ev.clientX, ev.clientY)?.closest('.node');
+      if (hit && hit.dataset.id !== n.id) {
+        g.edges.push({ from: n.id, to: hit.dataset.id, label: '' });
+        say('已連線');
+      }
+      draw();
+    };
+    svg.addEventListener('pointermove', move);
+    svg.addEventListener('pointerup', up, { once: true });
+    svg.addEventListener('pointercancel', up, { once: true });
+    return;
   }
 
   sel = n.id;
   const start = pt(e), from = { x: n.x, y: n.y };
-  svg.setPointerCapture(e.pointerId);
+  try { svg.setPointerCapture(e.pointerId); } catch {}
   const move = ev => {
     const p = pt(ev);
     n.x = Math.round(from.x + p.x - start.x);
@@ -221,11 +248,6 @@ $('add').addEventListener('click', () => {
   });
   sel = id;
   draw();
-});
-$('link').addEventListener('click', () => {
-  linking = linking ? null : 'armed';
-  $('link').classList.toggle('on', !!linking);
-  say(linking ? '連線模式：點起點再點終點' : '—');
 });
 $('del').addEventListener('click', () => sel ? removeNode(sel) : say('先選一個節點'));
 $('dir').addEventListener('change', () => { g.dir = $('dir').value; draw(); });
