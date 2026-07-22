@@ -31,6 +31,7 @@
     #src { border-right: 0; border-bottom: 1px solid var(--line); }
   }
 </style>
+<script src="/theme.js"></script>
 </head>
 <body>
 <div id="shell">
@@ -106,8 +107,15 @@ for (const k of Object.keys(SAMPLES)) $('sample').add(new Option(k, k));
 
 const saved = localStorage.getItem('mermaid.src');
 src.value = saved ?? SAMPLES.flowchart;
-$('theme').value = localStorage.getItem('mermaid.theme')
-  ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default');
+// 沒自己挑過圖表主題的話，跟著網站的深／淺色走
+const siteDark = () => (document.documentElement.dataset.theme
+  ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')) === 'dark';
+$('theme').value = localStorage.getItem('mermaid.theme') ?? (siteDark() ? 'dark' : 'default');
+addEventListener('themechange', () => {
+  if (localStorage.getItem('mermaid.theme')) return;
+  $('theme').value = siteDark() ? 'dark' : 'default';
+  render();
+});
 
 let seq = 0;
 async function render() {
