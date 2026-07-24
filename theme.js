@@ -19,6 +19,11 @@
         position: fixed; right: 20px; bottom: 20px; z-index: 50;
         display: block; width: var(--w); height: var(--h);
         font-size: 13px;
+        transition: opacity .25s;
+      }
+      /* 窄視窗時內文滿寬，捲動中把浮動開關淡出讓字可讀，停下再浮現 */
+      html.ui-scrolling #theme-toggle, html.ui-scrolling #lang-toggle {
+        opacity: 0; pointer-events: none;
       }
       #theme-toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
       #theme-toggle .slider {
@@ -76,5 +81,15 @@
       if (!localStorage.getItem(KEY)) paint();
     });
     paint();
+
+    // 桌機留白夠，開關不會壓到內文，只在窄視窗啟用淡出
+    const narrow = matchMedia('(max-width: 860px)');
+    let fadeTimer;
+    addEventListener('scroll', () => {
+      if (!narrow.matches) return;
+      root.classList.add('ui-scrolling');
+      clearTimeout(fadeTimer);
+      fadeTimer = setTimeout(() => root.classList.remove('ui-scrolling'), 350);
+    }, { passive: true });
   });
 })();

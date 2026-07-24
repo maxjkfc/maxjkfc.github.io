@@ -17,7 +17,7 @@
       border: 1px solid var(--line, #ccc); border-radius: 999px;
       background: var(--soft, #eee); color: var(--ink, #182129);
       cursor: pointer;
-      transition: border-color .15s, color .15s;
+      transition: border-color .15s, color .15s, opacity .25s;
     }
     #lang-toggle:hover { border-color: var(--accent, #A2571F); color: var(--accent, #A2571F); }
     #lang-toggle:focus-visible { outline: 2px solid var(--accent, #A2571F); outline-offset: 3px; }
