@@ -8,7 +8,7 @@
   const style = document.createElement('style');
   style.textContent = `
     :root[data-lang="en"] [lang|="zh"] { display: none !important; }
-    :root[data-lang="zh"] [lang="en"] { display: none !important; }
+    :root[data-lang="zh"] [lang|="en"] { display: none !important; }
     #lang-toggle {
       position: fixed; right: 20px; bottom: 56px; z-index: 50;
       width: 3.4em; padding: 3px 0;
@@ -35,7 +35,20 @@
       const text = l === 'en' ? el.dataset.en : el.dataset.zh;
       if (meta) el.content = text; else el.textContent = text;
     });
+    // 屬性層：無法用 CSS 或 textContent 切的 aria-label / title / placeholder。
+    // 英文值放 data-en-*，首次套用把原值快取進 data-zh-*。
+    for (const [attr, sel, enKey, zhKey] of ATTRS) {
+      document.querySelectorAll(`[data-${sel}]`).forEach(el => {
+        if (el.dataset[zhKey] === undefined) el.dataset[zhKey] = el.getAttribute(attr) ?? '';
+        el.setAttribute(attr, l === 'en' ? el.dataset[enKey] : el.dataset[zhKey]);
+      });
+    }
   }
+  const ATTRS = [
+    ['aria-label', 'en-label', 'enLabel', 'zhLabel'],
+    ['title', 'en-title', 'enTitle', 'zhTitle'],
+    ['placeholder', 'en-ph', 'enPh', 'zhPh'],
+  ];
 
   const saved = localStorage.getItem(KEY);
   apply(saved === 'en' || saved === 'zh' ? saved

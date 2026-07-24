@@ -39,18 +39,18 @@
 <header class="bar">
   <h1 lang="zh">Mermaid 即時預覽</h1>
   <h1 lang="en">Mermaid live preview</h1>
-  <select id="sample" title="範例"></select>
-  <select id="theme" title="主題">
+  <select id="sample" title="範例" data-en-title="Examples"></select>
+  <select id="theme" title="主題" data-en-title="Theme">
     <option value="default">default</option>
     <option value="dark">dark</option>
     <option value="neutral">neutral</option>
     <option value="forest">forest</option>
   </select>
   <span id="zoom">
-    <button id="out" title="縮小">−</button>
-    <button id="pct" title="還原 100%">100%</button>
-    <button id="in" title="放大">＋</button>
-    <button id="fit" title="符合視窗寬度"><span lang="zh">符合</span><span lang="en">Fit</span></button>
+    <button id="out" title="縮小" data-en-title="Zoom out">−</button>
+    <button id="pct" title="還原 100%" data-en-title="Reset to 100%">100%</button>
+    <button id="in" title="放大" data-en-title="Zoom in">＋</button>
+    <button id="fit" title="符合視窗寬度" data-en-title="Fit to width"><span lang="zh">符合</span><span lang="en">Fit</span></button>
   </span>
   <button id="svg"><span lang="zh">下載 SVG</span><span lang="en">SVG</span></button>
   <button id="png"><span lang="zh">下載 PNG</span><span lang="en">PNG</span></button>
@@ -58,7 +58,7 @@
   <span id="status" class="status">—</span>
 </header>
 <main>
-  <textarea id="src" spellcheck="false" placeholder="在這裡輸入 Mermaid 語法…"></textarea>
+  <textarea id="src" spellcheck="false" placeholder="在這裡輸入 Mermaid 語法…" data-en-ph="Type Mermaid syntax here…"></textarea>
   <div id="view"><div id="stage"></div></div>
 </main>
 <pre id="err"></pre>
