@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>流程圖繪製 → Mermaid — Dev Tools</title>
-<meta name="description" content="用拖拉的方式畫流程圖，直接產生 Mermaid 語法與 Markdown 區塊。">
+<title data-en="Flowchart → Mermaid — Dev Tools">流程圖繪製 → Mermaid — Dev Tools</title>
+<meta name="description" data-en="Draw a flowchart by dragging and get Mermaid syntax and a Markdown block." content="用拖拉的方式畫流程圖，直接產生 Mermaid 語法與 Markdown 區塊。">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✏️</text></svg>">
 <link rel="stylesheet" href="./style.css">
 <style>
@@ -39,20 +39,22 @@
   }
 </style>
 <script src="/theme.js"></script>
+<script src="/lang.js"></script>
 </head>
 <body>
 <div id="shell">
 <header class="bar">
-  <h1>流程圖 → Mermaid</h1>
-  <button id="add">＋ 節點</button>
-  <select id="shape" title="新節點形狀">
-    <option value="box">矩形</option>
-    <option value="round">圓角</option>
-    <option value="diamond">菱形</option>
+  <h1 lang="zh">流程圖 → Mermaid</h1>
+  <h1 lang="en">Flowchart → Mermaid</h1>
+  <button id="add"><span lang="zh">＋ 節點</span><span lang="en">＋ Node</span></button>
+  <select id="shape" title="新節點形狀" data-en-title="New node shape">
+    <option value="box" data-en="Rectangle">矩形</option>
+    <option value="round" data-en="Rounded">圓角</option>
+    <option value="diamond" data-en="Diamond">菱形</option>
   </select>
-  <select id="dir" title="方向">
-    <option value="TD">TD 由上而下</option>
-    <option value="LR">LR 由左而右</option>
+  <select id="dir" title="方向" data-en-title="Direction">
+    <option value="TD" data-en="TD top-down">TD 由上而下</option>
+    <option value="LR" data-en="LR left-right">LR 由左而右</option>
   </select>
   <span class="spacer"></span>
   <span id="status" class="status">—</span>
@@ -69,12 +71,13 @@
   </svg>
   <div id="side">
     <pre id="out"></pre>
-    <p class="hint">從節點邊上的小圓點拉到另一個節點就連線 · 滑過節點或線按紅色 ✕ 刪除（節點也可選取後按 Delete）· 雙擊節點改文字 · 點線可加標籤</p>
+    <p class="hint" lang="zh">從節點邊上的小圓點拉到另一個節點就連線 · 滑過節點或線按紅色 ✕ 刪除（節點也可選取後按 Delete）· 雙擊節點改文字 · 點線可加標籤</p>
+    <p class="hint" lang="en">Drag from a dot on a node's edge to another node to connect · hover a node or edge and click the red ✕ to delete (or select a node and press Delete) · double-click a node to edit text · click an edge to label it</p>
     <div class="acts">
-      <button id="copy">複製 Mermaid</button>
-      <button id="copymd">複製 Markdown</button>
-      <button id="send">送到即時預覽</button>
-      <button id="clear">清空</button>
+      <button id="copy"><span lang="zh">複製 Mermaid</span><span lang="en">Copy Mermaid</span></button>
+      <button id="copymd"><span lang="zh">複製 Markdown</span><span lang="en">Copy Markdown</span></button>
+      <button id="send"><span lang="zh">送到即時預覽</span><span lang="en">Send to preview</span></button>
+      <button id="clear"><span lang="zh">清空</span><span lang="en">Clear</span></button>
     </div>
   </div>
 </main>
