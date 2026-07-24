@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mermaid 即時預覽 — Dev Tools</title>
-<meta name="description" content="在瀏覽器即時編輯並預覽 Mermaid 流程圖，支援匯出 SVG。">
+<title data-en="Mermaid live preview — Dev Tools">Mermaid 即時預覽 — Dev Tools</title>
+<meta name="description" data-en="Edit and preview Mermaid diagrams live in the browser, with SVG export." content="在瀏覽器即時編輯並預覽 Mermaid 流程圖，支援匯出 SVG。">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧜</text></svg>">
 <link rel="stylesheet" href="./style.css">
 <style>
@@ -32,11 +32,13 @@
   }
 </style>
 <script src="/theme.js"></script>
+<script src="/lang.js"></script>
 </head>
 <body>
 <div id="shell">
 <header class="bar">
-  <h1>Mermaid 即時預覽</h1>
+  <h1 lang="zh">Mermaid 即時預覽</h1>
+  <h1 lang="en">Mermaid live preview</h1>
   <select id="sample" title="範例"></select>
   <select id="theme" title="主題">
     <option value="default">default</option>
@@ -48,10 +50,10 @@
     <button id="out" title="縮小">−</button>
     <button id="pct" title="還原 100%">100%</button>
     <button id="in" title="放大">＋</button>
-    <button id="fit" title="符合視窗寬度">符合</button>
+    <button id="fit" title="符合視窗寬度"><span lang="zh">符合</span><span lang="en">Fit</span></button>
   </span>
-  <button id="svg">下載 SVG</button>
-  <button id="png">下載 PNG</button>
+  <button id="svg"><span lang="zh">下載 SVG</span><span lang="en">SVG</span></button>
+  <button id="png"><span lang="zh">下載 PNG</span><span lang="en">PNG</span></button>
   <span class="spacer"></span>
   <span id="status" class="status">—</span>
 </header>
